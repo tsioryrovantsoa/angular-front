@@ -27,7 +27,7 @@ export class AppComponent {
   constructor(private authService:AuthService,
               private assignmentsService: AssignmentsService,
               private router:Router) {
-                // this.islogin=authService.isLoggedIn()
+                this.islogin=authService.isLoggedIn()
               }
 
 

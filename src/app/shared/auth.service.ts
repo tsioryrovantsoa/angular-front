@@ -40,7 +40,7 @@ uri = 'http://localhost:8010/api/';
   // méthode pour déconnecter l'utilisateur
   logOut() {
     this.loggedIn = false;
-    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 
@@ -48,6 +48,7 @@ uri = 'http://localhost:8010/api/';
     const token = localStorage.getItem('token')
     var result = false;
     if (token!=null) {
+      console.log("lelikeeeeee"+token)
       result = true
     }
     return result;

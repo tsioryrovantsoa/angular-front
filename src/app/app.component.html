@@ -1,12 +1,23 @@
-<h1>
-  <nav>
-    <a routerLink="/home">{{title}}</a>
-  </nav>
-</h1>
-<!-- <mat-slide-toggle (click)="login()" color="primary">Login</mat-slide-toggle>
-<button mat-button (click)="genererDonneesDeTest()">Peupler BD</button> -->
+<mat-toolbar color="primary" class="navbar">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/assignments">Assignments</button>
+  <button mat-button routerLink="/accueil">Accueil</button>
+  <button mat-button routerLink="/assignments">Assignments</button>
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #profileMenu="matMenu">
 
-<router-outlet></router-outlet>
+    <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
+  </mat-menu>
+</mat-toolbar>
+
+
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
 <!--
 <app-assignments></app-assignments>
 -->

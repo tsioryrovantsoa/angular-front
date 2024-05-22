@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class AuthService {
   loggedIn = false;
 
   constructor(
-    private http:HttpClient) { }
+    private http:HttpClient,private router: Router) { }
 
 uri = 'http://localhost:8010/api/';
 
@@ -39,7 +40,8 @@ uri = 'http://localhost:8010/api/';
   // méthode pour déconnecter l'utilisateur
   logOut() {
     this.loggedIn = false;
-
+    localStorage.removeItem('isLoggedIn');
+    this.router.navigate(['/login']);
   }
 
   // methode qui indique si on est connecté en tant qu'admin ou pas

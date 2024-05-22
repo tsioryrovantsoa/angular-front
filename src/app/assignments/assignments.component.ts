@@ -24,7 +24,7 @@ import { AuthInterceptor } from '../interceptor/auth.interceptor';
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css',
   imports: [

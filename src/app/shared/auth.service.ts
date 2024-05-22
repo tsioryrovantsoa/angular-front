@@ -22,10 +22,11 @@ uri = 'http://localhost:8010/api/';
     this.loggedIn = true;
     return this.http.post<any>(this.uri+"auth/login", { login, password }).pipe(
       tap(response => {
-        if (response && response.token) {
+        if (response && response.data.token) {
           this.roles = response.data.role;
+          console.log(response)
           localStorage.setItem('roles', JSON.stringify(this.roles));
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.data.token);
         }
       }),
       catchError(error => {

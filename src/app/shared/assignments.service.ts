@@ -17,8 +17,8 @@ export class AssignmentsService {
   constructor(private logService:LoggingService,
               private http:HttpClient) { }
 
-  //uri = 'http://localhost:8010/api/assignments';
-  uri = "https://angular-back-2.onrender.com/api/assignments";
+  uri = 'http://localhost:8010/api/assignments';
+  // uri = "https://angular-back-2.onrender.com/api/assignments";
 
   // retourne tous les assignments
   getAssignments():Observable<Assignment[]> {
@@ -57,7 +57,6 @@ export class AssignmentsService {
     return (error: any): Observable<T> => {
       console.log(error); // pour afficher dans la console
       console.log(operation + ' a échoué ' + error.message);
-
       return of(result as T);
     }
  };

@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,19 +9,36 @@ export class AuthService {
   // propriété pour savoir si l'utilisateur est connecté
   loggedIn = false;
 
-  constructor() { }
+  constructor(
+    private http:HttpClient) { }
+
+uri = 'http://localhost:8010/api/';
 
   // méthode pour connecter l'utilisateur
   // Typiquement, il faudrait qu'elle accepte en paramètres
   // un nom d'utilisateur et un mot de passe, que l'on vérifierait
   // auprès d'un serveur...
-  logIn() {
+  logIn(login: string, password: string): Observable<boolean>{
     this.loggedIn = true;
+    return this.http.post<any>(this.uri+"auth/login", { login, password }).pipe(
+      tap(response => {
+        if (response && response.token) {
+          this.roles = response.data.role;
+          localStorage.setItem('roles', JSON.stringify(this.roles));
+          localStorage.setItem('token', response.token);
+        }
+      }),
+      catchError(error => {
+        console.error('Login failed', error);
+        return of(false);
+      })
+    );
   }
-
+  private roles: string[] = [];
   // méthode pour déconnecter l'utilisateur
   logOut() {
     this.loggedIn = false;
+
   }
 
   // methode qui indique si on est connecté en tant qu'admin ou pas

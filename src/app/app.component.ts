@@ -23,10 +23,13 @@ import { MatMenuModule} from '@angular/material/menu';
 })
 export class AppComponent {
   title = 'Gestion des assignments';
-
+  islogin = false;
   constructor(private authService:AuthService,
               private assignmentsService: AssignmentsService,
-              private router:Router) {}
+              private router:Router) {
+                // this.islogin=authService.isLoggedIn()
+              }
+
 
   // Deconnexion
   logout(){

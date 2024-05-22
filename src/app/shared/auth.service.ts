@@ -44,6 +44,15 @@ uri = 'http://localhost:8010/api/';
     this.router.navigate(['/login']);
   }
 
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token')
+    var result = false;
+    if (token!=null) {
+      result = true
+    }
+    return result;
+  }
+
   // methode qui indique si on est connecté en tant qu'admin ou pas
   // pour le moment, on est admin simplement si on est connecté
   // En fait cette méthode ne renvoie pas directement un booleén

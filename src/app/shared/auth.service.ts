@@ -1,17 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   // propriété pour savoir si l'utilisateur est connecté
-  loggedIn = false;
+  // loggedIn = false;
+  private loggedIn = new BehaviorSubject<boolean>(this.checkToken());
 
   constructor(
     private http:HttpClient,private router: Router) { }
+
+    private checkToken(): boolean {
+      const token = localStorage.getItem('token');
+      return token !== null;
+    }
 
 uri = 'http://localhost:8010/api/';
 
@@ -20,7 +26,7 @@ uri = 'http://localhost:8010/api/';
   // un nom d'utilisateur et un mot de passe, que l'on vérifierait
   // auprès d'un serveur...
   logIn(login: string, password: string): Observable<boolean>{
-    this.loggedIn = true;
+    // console.log("adddddd"+login)
     return this.http.post<any>(this.uri+"auth/login", { login, password }).pipe(
       tap(response => {
         if (response && response.data.token) {
@@ -28,6 +34,7 @@ uri = 'http://localhost:8010/api/';
           console.log(response)
           localStorage.setItem('roles', JSON.stringify(this.roles));
           localStorage.setItem('token', response.data.token);
+          this.loggedIn.next(true);
         }
       }),
       catchError(error => {
@@ -39,19 +46,13 @@ uri = 'http://localhost:8010/api/';
   private roles: string[] = [];
   // méthode pour déconnecter l'utilisateur
   logOut() {
-    this.loggedIn = false;
     localStorage.removeItem('token');
+    this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem('token')
-    var result = false;
-    if (token!=null) {
-      console.log("lelikeeeeee"+token)
-      result = true
-    }
-    return result;
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
   // methode qui indique si on est connecté en tant qu'admin ou pas

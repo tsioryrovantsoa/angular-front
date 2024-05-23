@@ -10,14 +10,16 @@ import { AuthService } from './shared/auth.service';
 import { AssignmentsService } from './shared/assignments.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule} from '@angular/material/menu';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
             MatIconModule, MatSlideToggleModule,
-            AssignmentsComponent,MatToolbarModule,MatButtonModule,MatMenuModule],
+            AssignmentsComponent,MatToolbarModule,MatButtonModule,MatMenuModule,MatSidenavModule,
+            MatIconModule,MatListModule ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

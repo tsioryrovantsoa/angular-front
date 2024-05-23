@@ -1,35 +1,51 @@
 
 
 
-@if(isLogin){
-  <mat-toolbar  color="primary" class="navbar">
-  <span>{{title}}</span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/assignments">Assignments</button>
-  <button mat-button routerLink="/accueil">Accueil</button>
-  <button mat-button routerLink="/assignments">Assignments</button>
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #profileMenu="matMenu">
 
-    <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
-  </mat-menu>
-</mat-toolbar>
-}
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/assignments">Assignments</a>
+      <a mat-list-item routerLink="/accueil">Accueil</a>
+      <a mat-list-item routerLink="/profile">Profile</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    @if(isLogin){
+      <mat-toolbar color="primary" class="fixed-toolbar " >
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-button routerLink="/assignments">Assignments</button>
+        <button mat-button routerLink="/accueil">Accueil</button>
+        <button mat-button routerLink="/profile">Profile</button>
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
+        </mat-menu>
+      </mat-toolbar>
+
+    }
+
+    <div class="content">
+      <router-outlet></router-outlet>
+      @if(isLogin){
+      <mat-toolbar color="primary" class="footer">
+        <!-- <span>&copy; 2024 My Application</span> -->
+        <span class="spacer"></span>
+        <span>&copy; 2024 Application Assignments</span>
+      </mat-toolbar>
+    }
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 
-
-<div class="content">
-  <router-outlet></router-outlet>
-  @if(isLogin){
-  <mat-toolbar color="primary" class="footer">
-    <!-- <span>&copy; 2024 My Application</span> -->
-    <span class="spacer"></span>
-    <span>&copy; 2024 Application Assignments</span>
-  </mat-toolbar>
-}
-</div>
 
 
 

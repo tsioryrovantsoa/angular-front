@@ -4,11 +4,7 @@
 
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  margin: 0;
+
 }
 
 
@@ -21,3 +17,25 @@
   background-color: white;
   color: black;
 }
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.content {
+  padding: 20px;
+  margin-top: 64px;
+}
+
+.fixed-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0.5;
+  width: 1000px;
+  z-index: 1000;
+}
+

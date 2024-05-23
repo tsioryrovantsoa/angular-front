@@ -24,6 +24,8 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  isMenuClicked = false;
+
   title = 'Gestion des assignments';
   isLogin: boolean = false;
   constructor(private authService:AuthService,
@@ -66,5 +68,15 @@ export class AppComponent {
       // On devrait pouvoir le faire avec le router, jussqu'à la version 16 ça fonctionnait avec
       // this.router.navigate(['/home'], {replaceUrl:true});
     });
+  }
+  namclasstopheader : string = "fixed-primary"
+
+  menuchange(){
+    this.isMenuClicked = !this.isMenuClicked
+    if (this.isMenuClicked) {
+      this.namclasstopheader="fixed-primary click"
+    }else{
+      this.namclasstopheader="fixed-primary"
+    }
   }
 }

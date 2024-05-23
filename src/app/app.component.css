@@ -1,6 +1,7 @@
-.spacer {
+/* .spacer {
   flex: 1 1 auto;
-}
+} */
+
 
 .navbar {
   position: fixed;
@@ -18,12 +19,18 @@
   color: black;
 }
 
+.element{
+margin-left: auto;
+position: relative;
+}
+
 .sidenav-container {
   height: 100%;
 }
 
 .sidenav {
   width: 200px;
+  top: 0;
 }
 
 .content {
@@ -32,10 +39,24 @@
 }
 
 .fixed-toolbar {
-  position: fixed;
+  position: relative ;
   top: 0;
-  left: 0.5;
-  width: 1000px;
+  /* left: 0.5; */
+  /* width: 100%; */
+  margin: 0;
   z-index: 1000;
 }
 
+.fixed-primary{
+  top: 0;
+  position: fixed ;
+  width: calc(100% - 200px);
+  transition: all 1s ease;
+  z-index: 1000;
+}
+
+.fixed-primary.click{
+  width: 100%;
+  transition: all 1.5s ease;
+  z-index: 1000;
+}

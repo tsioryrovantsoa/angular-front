@@ -1,7 +1,5 @@
 
-
-
-
+@if(isLogin){
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" mode="side" opened>
     <mat-toolbar>Menu</mat-toolbar>
@@ -13,24 +11,29 @@
   </mat-sidenav>
   <mat-sidenav-content>
     @if(isLogin){
-      <mat-toolbar color="primary" class="fixed-toolbar " >
-        <button mat-icon-button (click)="drawer.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span class="spacer"></span>
-        <button mat-button routerLink="/assignments">Assignments</button>
-        <button mat-button routerLink="/accueil">Accueil</button>
-        <button mat-button routerLink="/profile">Profile</button>
-        <button mat-icon-button [matMenuTriggerFor]="profileMenu">
-          <mat-icon>account_circle</mat-icon>
-        </button>
-        <mat-menu #profileMenu="matMenu">
-          <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
-        </mat-menu>
-      </mat-toolbar>
+      <div class="{{namclasstopheader}}">
+        <mat-toolbar color="primary" class="fixed-toolbar " >
+          <div class="butt-menu" (click)="menuchange()">
+            <button mat-icon-button (click)="drawer.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+          <span class="spacer"></span>
+          <div class="element">
+            <!-- <button mat-button routerLink="/assignments">Assignments</button>
+            <button mat-button routerLink="/accueil">Accueil</button>
+            <button mat-button routerLink="/profile">Profile</button> -->
+            <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+              <mat-icon>account_circle</mat-icon>
+            </button>
+          </div>
+          <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
+          </mat-menu>
+        </mat-toolbar>
+      </div>
 
     }
-
     <div class="content">
       <router-outlet></router-outlet>
       @if(isLogin){
@@ -44,12 +47,9 @@
 
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-
-
-<!--
-<app-assignments></app-assignments>
--->
+}@else{
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+}
 

@@ -3,10 +3,11 @@ import { Assignment } from '../assignments/assignment.model';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { LoggingService } from './logging.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // importation des données de test
 import { bdInitialAssignments } from './data';
+import { AuthHeadersUtil } from '../utils/auth-headers.util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,24 @@ export class AssignmentsService {
   constructor(private logService:LoggingService,
               private http:HttpClient) { }
 
-  //uri = 'http://localhost:8010/api/assignments';
-  uri = "https://angular-back-2.onrender.com/api/assignments";
+  uri = 'http://localhost:8010/api/assignments';
+  // uri = "https://angular-back-2.onrender.com/api/assignments";
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': 'Bearer '+token
+    });
+  }
   // retourne tous les assignments
   getAssignments():Observable<Assignment[]> {
+
     return this.http.get<Assignment[]>(this.uri);
   }
 
   getAssignmentsPagines(page:number, limit:number):Observable<any> {
-    return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit);
+    const headers = AuthHeadersUtil.headers;
+    return this.http.get<Assignment[]>(this.uri + "?page=" + page + "&limit=" + limit,{ headers });
   }
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
@@ -57,7 +66,6 @@ export class AssignmentsService {
     return (error: any): Observable<T> => {
       console.log(error); // pour afficher dans la console
       console.log(operation + ' a échoué ' + error.message);
-
       return of(result as T);
     }
  };

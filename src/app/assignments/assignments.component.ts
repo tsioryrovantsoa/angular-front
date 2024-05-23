@@ -19,6 +19,8 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 import { AssignmentsService } from '../shared/assignments.service';
 import { RouterLink } from '@angular/router';
 import { filter, map, pairwise, tap, throttleTime } from 'rxjs/operators';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../interceptor/auth.interceptor';
 @Component({
   selector: 'app-assignments',
   standalone: true,
@@ -117,6 +119,8 @@ export class AssignmentsComponent implements OnInit {
 
   getAssignmentsFromService() {
     // on récupère les assignments depuis le service
+    const token = localStorage.getItem('token');
+    console.log("tayyyyyy"+token);
     this.assignmentsService
       .getAssignmentsPagines(this.page, this.limit)
       .subscribe((data) => {

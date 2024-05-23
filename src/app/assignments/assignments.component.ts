@@ -125,14 +125,13 @@ export class AssignmentsComponent implements OnInit {
       .getAssignmentsPagines(this.page, this.limit)
       .subscribe((data) => {
         // les données arrivent ici au bout d'un certain temps
-        console.log('Données arrivées');
-        this.assignments = data.docs;
-        this.totalDocs = data.totalDocs;
-        this.totalPages = data.totalPages;
-        this.nextPage = data.nextPage;
-        this.prevPage = data.prevPage;
-        this.hasNextPage = data.hasNextPage;
-        this.hasPrevPage = data.hasPrevPage;
+        this.assignments = data.data.docs;
+        this.totalDocs = data.data.totalDocs;
+        this.totalPages = data.data.totalPages;
+        this.nextPage = data.data.nextPage;
+        this.prevPage = data.data.prevPage;
+        this.hasNextPage = data.data.hasNextPage;
+        this.hasPrevPage = data.data.hasPrevPage;
       });
     console.log('Requête envoyée');
   }
@@ -142,7 +141,6 @@ export class AssignmentsComponent implements OnInit {
     this.assignmentsService
       .getAssignmentsPagines(this.page, this.limit)
       .subscribe((data) => {
-        // les données arrivent ici au bout d'un certain temps
         console.log('Données arrivées');
         this.assignments = [...this.assignments, ...data.docs];
         this.totalDocs = data.totalDocs;

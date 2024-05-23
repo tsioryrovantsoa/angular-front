@@ -22,7 +22,17 @@
 
 <div class="content">
   <router-outlet></router-outlet>
+  @if(isLogin){
+  <mat-toolbar color="primary" class="footer">
+    <!-- <span>&copy; 2024 My Application</span> -->
+    <span class="spacer"></span>
+    <span>&copy; 2024 Application Assignments</span>
+  </mat-toolbar>
+}
 </div>
+
+
+
 <!--
 <app-assignments></app-assignments>
 -->

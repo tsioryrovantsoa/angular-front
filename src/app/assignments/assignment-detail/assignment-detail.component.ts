@@ -33,6 +33,7 @@ export class AssignmentDetailComponent implements OnInit {
 
     // On recupere l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
     const id = this.route.snapshot.params['id'];
+    console.log("ity ilay id",id);
     // On utilise le service pour récupérer l'assignment avec cet id
     this.assignmentsService.getAssignment(id)
     .subscribe(assignment => {

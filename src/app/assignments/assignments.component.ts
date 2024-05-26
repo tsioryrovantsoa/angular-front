@@ -43,7 +43,6 @@ export class AssignmentsComponent implements OnInit {
     this.assignmentsService
       .getAssignmentsPagines(this.currentPage, this.pageSize)
       .subscribe((data) => {
-
         this.total = data.data.total;
         this.assignments = data.data.docs;
         this.updatePagedAssignments();

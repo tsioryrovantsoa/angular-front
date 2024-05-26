@@ -13,11 +13,12 @@ export class MatiereService {
 
   constructor(private http: HttpClient) {}
 
-  getMatieres(profId: string,page: number, limit: number): Observable<any> {
+  getMatieres(profId: string, page: number, limit: number): Observable<any> {
     const headers = AuthHeadersUtil.getAuthHeaders();
     const url = `${this.baseUrl}matieres/matiere/${profId}`+ '?page=' + page + '&limit=' + limit;
-    return this.http.get<any>(url,{headers}).pipe(
-      map(response => response.data.docs)
+    return this.http.get<any>(
+      url + '?page=' + page + '&limit=' + limit,
+      { headers }
     );
   }
 }

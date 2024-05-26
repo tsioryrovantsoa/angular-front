@@ -1,0 +1,13 @@
+<div class="matieres-container">
+  <app-matierecard *ngFor="let matiere of pagedMatieres"
+    [nom]="matiere.nom"
+    [image]="matiere.image"
+    [profNom]="matiere.professeur.nom"
+    [profImage]="matiere.professeur.image">
+  </app-matierecard>
+</div>
+<mat-paginator [length]="matieres.length"
+               [pageSize]="pageSize"
+               (page)="onPageChange($event)">
+</mat-paginator>
+

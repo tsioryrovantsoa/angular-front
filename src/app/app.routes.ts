@@ -5,6 +5,7 @@ import { AssignmentDetailComponent } from './assignments/assignment-detail/assig
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
+import { MatiereComponent } from './matiere/prof/matiere/matiere.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,5 +17,6 @@ export const routes: Routes = [
     path: "assignments/:id/edit",
     component: EditAssignmentComponent,
     canActivate: [authGuard]
-  }
+  },
+  { path: "matieres/:id", component: MatiereComponent}
 ];

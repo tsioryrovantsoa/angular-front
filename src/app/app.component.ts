@@ -5,41 +5,55 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { AssignmentsComponent } from './assignments/assignments.component';
 import { AuthService } from './shared/auth.service';
 import { AssignmentsService } from './shared/assignments.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { AssignmentsComponent } from './assignments/assignments.component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatButtonModule, MatDividerModule,
-            MatIconModule, MatSlideToggleModule,
-            AssignmentsComponent,MatToolbarModule,MatButtonModule,MatMenuModule,MatSidenavModule,
-            MatIconModule,MatListModule ],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    AssignmentsComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   isMenuClicked = false;
 
   title = 'Gestion des assignments';
   isLogin: boolean = false;
-  constructor(private authService:AuthService,
-              private assignmentsService: AssignmentsService,
-              private router:Router) {
-                this.authService.isLoggedIn().subscribe(isLoggedIn => {
-                  this.isLogin = isLoggedIn;
-                });
-              }
-
+  constructor(
+    private authService: AuthService,
+    private assignmentsService: AssignmentsService,
+    private router: Router
+  ) {
+    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      this.isLogin = isLoggedIn;
+    });
+  }
 
   // Deconnexion
-  logout(){
-   this.authService.logOut();
+  logout() {
+    this.authService.logOut();
   }
 
   // login() {
@@ -61,22 +75,23 @@ export class AppComponent {
     */
 
     // VERSION AVEC Observable
-    this.assignmentsService.peuplerBDavecForkJoin()
-    .subscribe(() => {
-      console.log("Données générées, on rafraichit la page pour voir la liste à jour !");
+    this.assignmentsService.peuplerBDavecForkJoin().subscribe(() => {
+      console.log(
+        'Données générées, on rafraichit la page pour voir la liste à jour !'
+      );
       window.location.reload();
       // On devrait pouvoir le faire avec le router, jussqu'à la version 16 ça fonctionnait avec
       // this.router.navigate(['/home'], {replaceUrl:true});
     });
   }
-  namclasstopheader : string = "fixed-primary"
+  namclasstopheader: string = 'fixed-primary';
 
-  menuchange(){
-    this.isMenuClicked = !this.isMenuClicked
+  menuchange() {
+    this.isMenuClicked = !this.isMenuClicked;
     if (this.isMenuClicked) {
-      this.namclasstopheader="fixed-primary click"
-    }else{
-      this.namclasstopheader="fixed-primary"
+      this.namclasstopheader = 'fixed-primary click';
+    } else {
+      this.namclasstopheader = 'fixed-primary';
     }
   }
 }

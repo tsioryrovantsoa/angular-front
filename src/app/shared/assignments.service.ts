@@ -28,7 +28,9 @@ export class AssignmentsService {
   }
 
   getAssignmentsPagines(page: number, limit: number): Observable<any> {
+
     const headers = AuthHeadersUtil.getAuthHeaders();
+
     return this.http.get<Assignment[]>(
       this.uri + '?page=' + page + '&limit=' + limit,
       { headers }
@@ -36,6 +38,7 @@ export class AssignmentsService {
   }
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
+
   getAssignment(id: string): Observable<Assignment | undefined> {
     const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.get<Assignment>(this.uri + '/' + id, { headers }).pipe(

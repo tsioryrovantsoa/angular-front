@@ -1,4 +1,9 @@
-<div *ngFor="let assignment of assignments">
+<mat-paginator [length]="this.total"
+               [pageSize]="pageSize"
+               (page)="onPageChange($event)">
+</mat-paginator>
+<div class="assignment-container">
+<div *ngFor="let assignment of assignments" class="assignment-wrapper">
   <mat-card class="assignment-card">
     <mat-card-header>
       <mat-card-title>{{ assignment.nom }}</mat-card-title>
@@ -27,3 +32,5 @@
     </mat-card-content>
   </mat-card>
 </div>
+</div>
+

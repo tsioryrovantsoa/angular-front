@@ -26,20 +26,26 @@ import { ActivatedRoute } from '@angular/router';
 export class MatiereComponent {
   matieres: Matiere[] = [];
   pageSize = 4;
-  pagedMatieres: Matiere[] | any = [] ;
+  currentPage = 1;
+  total =0;
+  pagedMatieres: Matiere[] | any = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
-  constructor(private matiereService: MatiereService, private route: ActivatedRoute) {}
+  constructor(private matiereService: MatiereService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-// '664b91cb072ae93db4ed0f6f'
+    // '664b91cb072ae93db4ed0f6f'
     this.route.paramMap.subscribe(params => {
-      var profId = params.get('id')??"";
-      this.matiereService.getMatieres(profId).subscribe((data) => {
-        this.matieres = data;
-        this.updatePagedMatieres();
-      });
+      const profId = params.get('id') ?? "";
+      this.getMatiereByProfId(profId, this.currentPage, this.pageSize);
+    });
+  }
+
+  getMatiereByProfId(profId: string, page: number, limit: number) {
+    this.matiereService.getMatieres(profId, page, limit).subscribe((data) => {
+      this.matieres = data;
+      this.updatePagedMatieres();
     });
   }
 
@@ -49,6 +55,8 @@ export class MatiereComponent {
   }
 
   onPageChange(event: any) {
-    this.updatePagedMatieres();
+    this.currentPage = event.pageIndex + 1;
+    var profId = this.route.snapshot.paramMap.get('id') ?? "";
+    this.getMatiereByProfId(profId, this.currentPage, this.pageSize);
   }
 }

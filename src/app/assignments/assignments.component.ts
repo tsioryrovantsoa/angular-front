@@ -4,6 +4,9 @@ import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-assignments',
@@ -13,19 +16,23 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./assignments.component.css'],
   imports: [
     CommonModule,
-    MatCardModule
+    HttpClientModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatListModule,
   ],
 })
 export class AssignmentsComponent implements OnInit {
   assignments: Assignment[] = [];
-  page = 1;
-  limit = 10;
+  pageSize = 3;
+  currentPage = 1;
+  total =0;
+  pagedAssignments: Assignment[] | any = [] ;
 
-  @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   constructor(
     private assignmentsService: AssignmentsService,
-    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -34,9 +41,23 @@ export class AssignmentsComponent implements OnInit {
 
   getAssignmentsFromService() {
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines(this.currentPage, this.pageSize)
       .subscribe((data) => {
+
+        this.total = data.data.total;
         this.assignments = data.data.docs;
+        this.updatePagedAssignments();
       });
+
+  }
+
+  updatePagedAssignments() {
+    const startIndex = this.paginator.pageIndex * this.pageSize;
+    this.pagedAssignments = this.assignments.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.pageIndex + 1;
+    this.getAssignmentsFromService();
   }
 }

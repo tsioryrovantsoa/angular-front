@@ -34,6 +34,7 @@ export class AssignmentsService {
 
   getAssignmentsPagines(page: number, limit: number): Observable<any> {
     const headers = AuthHeadersUtil.headers;
+    console.log(headers);
     return this.http.get<Assignment[]>(
       this.uri + '?page=' + page + '&limit=' + limit,
       { headers }

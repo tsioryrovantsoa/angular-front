@@ -38,7 +38,7 @@ export class EditAssignmentComponent implements OnInit {
   ngOnInit() {
     // on récupère l'id dans l'url
     const id = +this.route.snapshot.params['id'];
-    this.assignmentsService.getAssignment(id)
+    this.assignmentsService.getAssignment(id.toString())
     .subscribe((assignment) => {
       this.assignment = assignment;
       // on met à jour les champs du formulaire

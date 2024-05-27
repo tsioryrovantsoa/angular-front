@@ -39,7 +39,7 @@ export class AssignmentsService {
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
 
-  getAssignment(id: string): Observable<Assignment | undefined> {
+  getAssignment(id: string): Observable<any> {
     const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.get<Assignment>(this.uri + '/' + id, { headers }).pipe(
       catchError(

@@ -9,21 +9,27 @@ import { Assignment } from '../assignment.model';
 import { AssignmentsService } from '../../shared/assignments.service';
 import  {RouterLink} from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NoteFormComponent } from '../note-form/note-form.component';
+
+
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink,
+  imports: [CommonModule, RouterLink,MatDividerModule, MatDialogModule,
     MatButtonModule, MatCardModule, MatCheckboxModule],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
-  assignmentTransmis!: Assignment|undefined;
+  assignmentTransmis!: Assignment|any;
 
   constructor(private assignmentsService:AssignmentsService,
               private authService:AuthService,
               private route:ActivatedRoute,
-              private router:Router) { }
+              private router:Router,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     // Recuperation des query params (ce qui suit le ? dans l'url)
@@ -37,7 +43,8 @@ export class AssignmentDetailComponent implements OnInit {
     // On utilise le service pour récupérer l'assignment avec cet id
     this.assignmentsService.getAssignment(id)
     .subscribe(assignment => {
-      this.assignmentTransmis = assignment;
+      console.log("haha"+JSON.stringify(assignment) )
+      this.assignmentTransmis = assignment.data;
     });
   }
 
@@ -70,5 +77,19 @@ export class AssignmentDetailComponent implements OnInit {
 
   isAdmin() {
     return true;
+  }
+
+  openNoteDialog(): void {
+    const dialogRef = this.dialog.open(NoteFormComponent, {
+      width: '300px',
+      data: { note: this.assignmentTransmis.note, remarque: this.assignmentTransmis.remarque }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.assignmentTransmis.note = result.note;
+        this.assignmentTransmis.remarque = result.remarque;
+      }
+    });
   }
 }

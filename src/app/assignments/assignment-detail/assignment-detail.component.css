@@ -1,4 +1,53 @@
-.container {
+.assignment-card {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.card-title-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.author-details {
+  text-align: center;
+}
+
+.matiere-image {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.actions-container button,
+.actions-container mat-checkbox {
+  margin: 0 10px;
+}
+
+mat-divider {
+  width: 100%;
+  margin: 20px 0;
 }

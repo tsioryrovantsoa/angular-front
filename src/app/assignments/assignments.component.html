@@ -27,3 +27,15 @@
     </mat-card-content>
   </mat-card>
 </div>
+<mat-paginator
+  #paginator
+  class="demo-paginator"
+  (page)="handlePageEvent($event)"
+  [length]="totalDocs"
+  [pageSize]="limit"
+  [showFirstLastButtons]="true"
+  [pageSizeOptions]="[2, 5, 10, 25]"
+  [pageIndex]="page"
+  aria-label="Select page"
+>
+</mat-paginator>

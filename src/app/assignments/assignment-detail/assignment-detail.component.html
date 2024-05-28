@@ -10,12 +10,16 @@
     <mat-divider></mat-divider>
     <div class="author-details">
       <h4>Auteur: {{ assignmentTransmis?.auteur?.nom }}</h4>
+      @if(assignmentTransmis?.note !== null){
       <h4>
         Note:
-        <span *ngIf="assignmentTransmis?.note !== null">{{ assignmentTransmis?.note }}</span>
-        <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openNoteDialog()">Noter</button>
+        <span>{{ assignmentTransmis?.note }}</span>
+
       </h4>
       <h4>Remarques: {{ assignmentTransmis?.remarques }}</h4>
+    }@else{
+      <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openDialog()">Noter</button>
+    }
     </div>
   </div>
   <mat-divider></mat-divider>
@@ -25,9 +29,6 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions class="actions-container">
-    <div class="checkbox-container" *ngIf="!assignmentTransmis?.rendu">
-      <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
-    </div>
     <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
     <nav>
       <a routerLink="edit">

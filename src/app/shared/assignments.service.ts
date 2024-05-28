@@ -90,6 +90,16 @@ export class AssignmentsService {
     const headers = AuthHeadersUtil.getAuthHeaders();
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
+    return this.http.put<Assignment>(this.uri+"/note/"+assignment, { headers });
+  }
+
+  noteAssignment(assignment: Assignment): Observable<any> {
+    // l'assignment passé en paramètre est le même objet que dans le tableau
+    // plus tard on verra comment faire avec une base de données
+    // il faudra faire une requête HTTP pour envoyer l'objet modifié
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    this.logService.log(assignment.nom, 'modifié');
+    //return of("Assignment modifié avec succès");
     return this.http.put<Assignment>(this.uri, assignment, { headers });
   }
 

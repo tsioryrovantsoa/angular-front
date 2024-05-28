@@ -31,6 +31,8 @@ export class AssignmentDetailComponent implements OnInit {
               private router:Router,
               public dialog: MatDialog) { }
 
+
+
   ngOnInit() {
     // Recuperation des query params (ce qui suit le ? dans l'url)
     console.log(this.route.snapshot.queryParams);
@@ -79,17 +81,30 @@ export class AssignmentDetailComponent implements OnInit {
     return true;
   }
 
-  openNoteDialog(): void {
+  // openNoteDialog(): void {
+  //   const dialogRef = this.dialog.open(NoteFormComponent, {
+  //     width: '300px',
+  //     data: { note: this.assignmentTransmis.note, remarque: this.assignmentTransmis.remarque }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.assignmentTransmis.note = result.note;
+  //       this.assignmentTransmis.remarque = result.remarque;
+  //     }
+  //   });
+  // }
+
+  animal: string ="tayy";
+  name: string ="";
+  openDialog(): void {
     const dialogRef = this.dialog.open(NoteFormComponent, {
-      width: '300px',
-      data: { note: this.assignmentTransmis.note, remarque: this.assignmentTransmis.remarque }
+      data: {assignmentTransmis: this.assignmentTransmis, animal: this.animal},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.assignmentTransmis.note = result.note;
-        this.assignmentTransmis.remarque = result.remarque;
-      }
+      console.log('The dialog was closed');
+      this.animal = result;
     });
   }
 }

@@ -1,14 +1,20 @@
-<h1>Noter l'Assignment</h1>
-<form (ngSubmit)="onSubmit()" class="note-form">
-  <!-- <mat-form-field class="full-width">
-    <mat-label>Note</mat-label>
-    <input matInput type="number" [(ngModel)]="note" name="note" required>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>Remarque</mat-label>
-    <textarea matInput [(ngModel)]="remarque" name="remarque"></textarea>
-  </mat-form-field> -->
-  <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit">Valider</button>
+<h1 mat-dialog-title>Noter l'Assignment</h1>
+<!-- <h2 mat-dialog-title>Hi {{data.name}}</h2> -->
+<mat-dialog-content>
+  <div>
+    <mat-form-field>
+      <mat-label> Note </mat-label>
+      <input type="number" min="0" max="20" matInput [(ngModel)]="data.note">
+    </mat-form-field>
   </div>
-</form>
+  <div>
+    <mat-form-field>
+      <mat-label> Remarques </mat-label>
+      <input matInput [(ngModel)]="data.remarque">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button>Annuler</button>
+  <button color="primary" (click)="onSubmit()" mat-button cdkFocusInitial>Noter</button>
+</mat-dialog-actions>

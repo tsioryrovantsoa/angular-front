@@ -4,7 +4,9 @@ import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-assignments',
@@ -12,26 +14,25 @@ import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
   providers: [],
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.css'],
-  imports: [CommonModule, MatCardModule, MatPaginatorModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatListModule,
+  ],
 })
 export class AssignmentsComponent implements OnInit {
-  titre = 'Liste des assignments';
-  page = 1;
-  limit = 2;
-  totalDocs!: number;
-  totalPages!: number;
-  nextPage!: number;
-  prevPage!: number;
-  hasNextPage!: boolean;
-  hasPrevPage!: boolean;
   assignments: Assignment[] = [];
-  displayedColumns: string[] = ['nom', 'dateDeRendu', 'rendu'];
+  pageSize = 3;
+  currentPage = 1;
+  total =0;
+  pagedAssignments: Assignment[] | any = [] ;
 
-  @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
+  @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   constructor(
     private assignmentsService: AssignmentsService,
-    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -39,28 +40,23 @@ export class AssignmentsComponent implements OnInit {
   }
 
   getAssignmentsFromService() {
-    console.log("this.page", this.page);
-    console.log("this.limit", this.limit);
     this.assignmentsService
-      .getAssignmentsPagines(this.page, this.limit)
+      .getAssignmentsPagines(this.currentPage, this.pageSize)
       .subscribe((data) => {
-        console.log(
-          data.data
-        );
+        this.total = data.data.total;
         this.assignments = data.data.docs;
-        this.totalDocs = data.data.totalDocs;
-        this.totalPages = data.data.totalPages;
-        this.nextPage = data.data.nextPage;
-        this.prevPage = data.data.prevPage;
-        this.hasNextPage = data.data.hasNextPage;
-        this.hasPrevPage = data.data.hasPrevPage;
+        this.updatePagedAssignments();
       });
+
   }
 
-  handlePageEvent(event: PageEvent) {
-    console.log(event);
-    this.page = event.pageIndex + 1;
-    this.limit = event.pageSize;
+  updatePagedAssignments() {
+    const startIndex = this.paginator.pageIndex * this.pageSize;
+    this.pagedAssignments = this.assignments.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.pageIndex + 1;
     this.getAssignmentsFromService();
   }
 }

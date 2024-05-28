@@ -1,0 +1,16 @@
+
+
+<!-- <mat-progress-bar ngIf="loading" mode="indeterminate"></mat-progress-bar> -->
+<div *ngIf="!loading" class="matieres-container">
+  <app-matierecard *ngFor="let matiere of matieres"
+    [nom]="matiere.nom"
+    [image]="matiere.image"
+    [profNom]="matiere.professeur.nom"
+    [profImage]="matiere.professeur.image">
+  </app-matierecard>
+</div>
+<mat-paginator [length]="this.total"
+               [pageSize]="pageSize"
+               (page)="onPageChange($event)">
+</mat-paginator>
+

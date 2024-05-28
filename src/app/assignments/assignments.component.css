@@ -45,5 +45,16 @@ td {
 }
 
 .assignment-card {
-  margin: 20px;
+  /* margin: 5px; */
+  min-height: 450px;
+}
+
+.assignment-container {
+  display: flex;
+  flex-wrap: wrap; /* Pour permettre le retour à la ligne si nécessaire */
+  justify-content: space-around; /* Pour espacer uniformément les éléments horizontalement */
+}
+
+.assignment-wrapper {
+  margin: 5px; /* Espacement entre les cartes d'assignation */
 }

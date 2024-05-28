@@ -34,6 +34,7 @@ uri = 'http://localhost:8010/api/';
           console.log(response)
           localStorage.setItem('roles', JSON.stringify(this.roles));
           localStorage.setItem('token', response.data.token);
+          localStorage.setItem('id', response.data.id);
           this.loggedIn.next(true);
         }
       }),
@@ -74,3 +75,4 @@ uri = 'http://localhost:8010/api/';
     return promesse;
   }
 }
+

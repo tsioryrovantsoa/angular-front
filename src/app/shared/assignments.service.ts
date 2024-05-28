@@ -20,21 +20,17 @@ export class AssignmentsService {
   uri = 'http://localhost:8010/api/assignments';
   // uri = "https://angular-back-2.onrender.com/api/assignments";
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: 'Bearer ' + token,
-    });
-  }
+
   // retourne tous les assignments
   getAssignments(): Observable<Assignment[]> {
-    const headers = AuthHeadersUtil.headers;
+    const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.get<Assignment[]>(this.uri, { headers });
   }
 
   getAssignmentsPagines(page: number, limit: number): Observable<any> {
-    const headers = AuthHeadersUtil.headers;
-    console.log(headers);
+
+    const headers = AuthHeadersUtil.getAuthHeaders();
+
     return this.http.get<Assignment[]>(
       this.uri + '?page=' + page + '&limit=' + limit,
       { headers }
@@ -42,8 +38,9 @@ export class AssignmentsService {
   }
 
   // renvoie un assignment par son id, renvoie undefined si pas trouvé
-  getAssignment(id: number): Observable<Assignment | undefined> {
-    const headers = AuthHeadersUtil.headers;
+
+  getAssignment(id: string): Observable<any> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.get<Assignment>(this.uri + '/' + id, { headers }).pipe(
       catchError(
         this.handleError<any>(
@@ -79,7 +76,7 @@ export class AssignmentsService {
 
   // ajoute un assignment et retourne une confirmation
   addAssignment(assignment: Assignment): Observable<any> {
-    const headers = AuthHeadersUtil.headers;
+    const headers = AuthHeadersUtil.getAuthHeaders();
     //this.assignments.push(assignment);
     this.logService.log(assignment.nom, 'ajouté');
     //return of("Assignment ajouté avec succès");
@@ -90,7 +87,7 @@ export class AssignmentsService {
     // l'assignment passé en paramètre est le même objet que dans le tableau
     // plus tard on verra comment faire avec une base de données
     // il faudra faire une requête HTTP pour envoyer l'objet modifié
-    const headers = AuthHeadersUtil.headers;
+    const headers = AuthHeadersUtil.getAuthHeaders();
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
     return this.http.put<Assignment>(this.uri, assignment, { headers });
@@ -100,7 +97,7 @@ export class AssignmentsService {
     // on va supprimer l'assignment dans le tableau
     //let pos = this.assignments.indexOf(assignment);
     //this.assignments.splice(pos, 1);
-    const headers = AuthHeadersUtil.headers;
+    const headers = AuthHeadersUtil.getAuthHeaders();
     this.logService.log(assignment.nom, 'supprimé');
     //return of("Assignment supprimé avec succès");
     return this.http.delete(this.uri + '/' + assignment._id, { headers });

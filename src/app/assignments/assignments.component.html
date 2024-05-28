@@ -1,41 +1,39 @@
-<div *ngFor="let assignment of assignments">
-  <mat-card class="assignment-card">
-    <mat-card-header>
-      <mat-card-title>{{ assignment.nom }}</mat-card-title>
-      <mat-card-subtitle
-        >{{ assignment.auteur.nom }} -
-        {{ assignment.matiere.nom }}</mat-card-subtitle
-      >
-      <img
-        mat-card-avatar
-        [src]="'assets/images/' + assignment.matiere.prof.image"
-        alt="{{ assignment.matiere.prof.nom }}"
-      />
-    </mat-card-header>
-    <img
-      mat-card-image
-      [src]="'assets/images/' + assignment.matiere.image"
-      *ngIf="assignment.matiere.image"
-      alt="{{ assignment.matiere.nom }}"
-      width="200"
-      height="200"
-    />
-    <mat-card-content>
-      <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
-      <p *ngIf="assignment.note">Note: {{ assignment.note }}</p>
-      <p *ngIf="assignment.remarques">Remarques: {{ assignment.remarques }}</p>
-    </mat-card-content>
-  </mat-card>
-</div>
 <mat-paginator
-  #paginator
-  class="demo-paginator"
-  (page)="handlePageEvent($event)"
-  [length]="totalDocs"
-  [pageSize]="limit"
-  [showFirstLastButtons]="true"
-  [pageSizeOptions]="[2, 5, 10, 25]"
-  [pageIndex]="page"
-  aria-label="Select page"
+  [length]="this.total"
+  [pageSize]="pageSize"
+  (page)="onPageChange($event)"
 >
 </mat-paginator>
+<div class="assignment-container">
+  <div *ngFor="let assignment of assignments" class="assignment-wrapper">
+    <mat-card class="assignment-card">
+      <mat-card-header>
+        <mat-card-title>{{ assignment.nom }}</mat-card-title>
+        <mat-card-subtitle
+          >{{ assignment.auteur.nom }} -
+          {{ assignment.matiere.nom }}</mat-card-subtitle
+        >
+        <img
+          mat-card-avatar
+          [src]="'assets/images/' + assignment.matiere.prof.image"
+          alt="{{ assignment.matiere.prof.nom }}"
+        />
+      </mat-card-header>
+      <img
+        mat-card-image
+        [src]="'assets/images/' + assignment.matiere.image"
+        *ngIf="assignment.matiere.image"
+        alt="{{ assignment.matiere.nom }}"
+        width="200"
+        height="200"
+      />
+      <mat-card-content>
+        <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
+        <p *ngIf="assignment.note">Note: {{ assignment.note }}</p>
+        <p *ngIf="assignment.remarques">
+          Remarques: {{ assignment.remarques }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

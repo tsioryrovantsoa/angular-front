@@ -1,32 +1,38 @@
-@if(assignmentTransmis) {
-<h2>Détail de l'assignment:</h2>
-
-<mat-card>
+<mat-card class="assignment-card">
+  <div class="card-header">
+    <div class="card-title-section">
+      <div class="card-title">
+        <h2>{{ assignmentTransmis?.nom }}</h2>
+        <h3>{{ assignmentTransmis?.matiere?.nom }}</h3>
+        <h4>{{ assignmentTransmis?.matiere?.prof?.nom }}</h4>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="author-details">
+      <h4>Auteur: {{ assignmentTransmis?.auteur?.nom }}</h4>
+      <h4>
+        Note:
+        <span *ngIf="assignmentTransmis?.note !== null">{{ assignmentTransmis?.note }}</span>
+        <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openNoteDialog()">Noter</button>
+      </h4>
+      <h4>Remarques: {{ assignmentTransmis?.remarques }}</h4>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <img class="matiere-image" *ngIf="assignmentTransmis?.matiere?.image" [src]="'assets/images/' + assignmentTransmis?.matiere?.image" alt="Matière Image" />
   <mat-card-content>
-    <mat-card-title>{{ assignmentTransmis.nom }}</mat-card-title>
-    <mat-card-subtitle>{{
-      assignmentTransmis.dateDeRendu | date
-    }}</mat-card-subtitle>
+    <mat-card-subtitle>Date de rendu: {{ assignmentTransmis?.dateDeRendu | date }}</mat-card-subtitle>
   </mat-card-content>
-  <mat-card-actions class="container">
-    @if(!assignmentTransmis.rendu) {
-    <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
-    }
-    <button mat-raised-button color="warn" (click)="onDelete()"
-            [disabled]="!isAdmin()"
-    >
-      DELETE
-    </button>
+  <mat-divider></mat-divider>
+  <mat-card-actions class="actions-container">
+    <div class="checkbox-container" *ngIf="!assignmentTransmis?.rendu">
+      <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
+    </div>
+    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
     <nav>
       <a routerLink="edit">
-        <button mat-raised-button color="primary"
-                [disabled]="!isAdmin()"
-        >
-          EDIT
-        </button>
+        <button mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
       </a>
     </nav>
   </mat-card-actions>
 </mat-card>
-
-}

@@ -2,8 +2,7 @@
   [length]="this.total"
   [pageSize]="pageSize"
   (page)="onPageChange($event)"
->
-</mat-paginator>
+></mat-paginator>
 <div class="assignment-container">
   <div *ngFor="let assignment of assignments" class="assignment-wrapper">
     <mat-card class="assignment-card">
@@ -18,18 +17,33 @@
           alt="{{ assignment.matiere.prof.nom }}"
         />
       </mat-card-header>
-      <img
-        mat-card-image
-        [src]="'assets/images/' + assignment.matiere.image"
-        *ngIf="assignment.matiere.image"
-        alt="{{ assignment.matiere.nom }}"
-        width="200"
-        height="200"
-      />
+      <div class="image-container">
+        <img
+          mat-card-image
+          [src]="'assets/images/' + assignment.matiere.image"
+          *ngIf="assignment.matiere.image"
+          alt="{{ assignment.matiere.nom }}"
+          class="matiere-image"
+        />
+      </div>
       <mat-card-content>
-        <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
-        <p *ngIf="assignment.note">Note: {{ assignment.note }}</p>
-        <p *ngIf="assignment.remarques">Remarques: {{ assignment.remarques }}</p>
+        <p [ngClass]="{'date-passee': isDatePassed(assignment.dateDeRendu)}">
+          Date de rendu : <strong>{{ assignment.dateDeRendu | date: 'dd MMMM yyyy' }}</strong>
+        </p>
+        <ng-container *ngIf="assignment.rendu">
+          <p
+            *ngIf="assignment.note !== null"
+            [ngClass]="{
+              passable: assignment.note < 10,
+              bien: assignment.note >= 10 && assignment.note < 15,
+              'tres-bien': assignment.note >= 15
+            }"
+            class="note"
+          >
+            Note : <strong>{{ assignment.note }} / 20</strong>
+          </p>
+          <p *ngIf="assignment.remarques">Remarques : {{ assignment.remarques }}</p>
+        </ng-container>
       </mat-card-content>
     </mat-card>
   </div>

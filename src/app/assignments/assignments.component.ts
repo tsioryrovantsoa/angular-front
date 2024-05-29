@@ -59,4 +59,8 @@ export class AssignmentsComponent implements OnInit {
     this.currentPage = event.pageIndex + 1;
     this.getAssignmentsFromService();
   }
+
+  isDatePassed(date: Date): boolean {
+    return new Date(date) < new Date();
+  }
 }

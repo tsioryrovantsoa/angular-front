@@ -14,3 +14,34 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.matiere-image {
+  width: 100px; /* Adjust the width as needed */
+  height: auto;
+}
+
+.note {
+  font-weight: bold;
+}
+
+.passable {
+  color: red;
+}
+
+.bien {
+  color: orange;
+}
+
+.tres-bien {
+  color: green;
+}
+
+.date-passee {
+  color: red;
+}

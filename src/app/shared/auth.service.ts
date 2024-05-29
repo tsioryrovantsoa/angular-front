@@ -32,7 +32,7 @@ uri = 'http://localhost:8010/api/';
         if (response && response.data.token) {
           this.roles = response.data.role;
           console.log(response)
-          localStorage.setItem('roles', JSON.stringify(this.roles));
+          localStorage.setItem('roles', response.data.role);
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('id', response.data.id);
           this.loggedIn.next(true);

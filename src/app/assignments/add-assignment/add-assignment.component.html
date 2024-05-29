@@ -1,38 +1,74 @@
 <h1>Ajout d'un assignment</h1>
-<form
-  ngForm
-  #assignmentForm
-  (submit)="onSubmit($event); assignmentForm.reset()"
-  class="form"
->
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Nom"
-      required
-      [(ngModel)]="nomAssignment"
-      name="nom"
-    />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Date de rendu</mat-label>
-    <input
-      matInput
-      [matDatepicker]="picker"
-      [(ngModel)]="dateDeRendu"
-      name="date"
-    />
-    <mat-hint>dd/MM/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <button
-    mat-stroked-button
-    color="primary"
-    [disabled]="nomAssignment == '' || dateDeRendu === undefined"
-  >
-    Ajouter un devoir
-  </button>
-</form>
+<mat-card>
+  <mat-card-content>
+    <form (ngSubmit)="createAssignment()" class="form">
+      <mat-form-field>
+        <mat-label>Nom de l'assignation</mat-label>
+        <input matInput [(ngModel)]="assignmentData.nom" name="nom" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Date de rendu</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="assignmentData.dateDeRendu"
+          name="dateDeRendu"
+          required
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field *ngIf="showProfessor">
+        <mat-label>Professeur</mat-label>
+        <mat-select
+          [(ngModel)]="selectedProfessor"
+          name="professor"
+          (selectionChange)="selectProfessor($event.value)"
+        >
+          <mat-option
+            *ngFor="let professor of professors"
+            [value]="professor._id"
+            >{{ professor.nom }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="subjects && subjects.length">
+        <mat-label>Matière</mat-label>
+        <mat-select
+          [(ngModel)]="assignmentData.matiere"
+          name="matiere"
+          (selectionChange)="selectSubject($event.value)"
+        >
+          <mat-option *ngFor="let subject of subjects" [value]="subject._id">{{
+            subject.nom
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="classes && classes.length">
+        <mat-label>Classe</mat-label>
+        <mat-select [(ngModel)]="assignmentData.classe" name="classe">
+          <mat-option *ngFor="let class of classes" [value]="class._id"
+            >{{ class.nom }} ({{ class.niveau }})</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="
+          assignmentData.nom == '' ||
+          assignmentData.dateDeRendu === undefined ||
+          assignmentData.matiere == '' ||
+          assignmentData.classe == ''
+        "
+      >
+        Créer l'assignation
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

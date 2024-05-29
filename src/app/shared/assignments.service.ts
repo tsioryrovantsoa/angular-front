@@ -20,7 +20,6 @@ export class AssignmentsService {
   uri = 'http://localhost:8010/api/assignments';
   // uri = "https://angular-back-2.onrender.com/api/assignments";
 
-
   // retourne tous les assignments
   getAssignments(): Observable<Assignment[]> {
     const headers = AuthHeadersUtil.getAuthHeaders();
@@ -28,7 +27,6 @@ export class AssignmentsService {
   }
 
   getAssignmentsPagines(page: number, limit: number): Observable<any> {
-
     const headers = AuthHeadersUtil.getAuthHeaders();
 
     return this.http.get<Assignment[]>(
@@ -90,7 +88,9 @@ export class AssignmentsService {
     const headers = AuthHeadersUtil.getAuthHeaders();
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri+"/note/"+assignment._id, { headers });
+    return this.http.put<Assignment>(this.uri + '/note/' + assignment._id, {
+      headers,
+    });
   }
 
   noteAssignment(assignment: Assignment): Observable<any> {
@@ -101,7 +101,11 @@ export class AssignmentsService {
     const options = { headers: headers };
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri + "/note/" + assignment._id, assignment, options);
+    return this.http.put<Assignment>(
+      this.uri + '/note/' + assignment._id,
+      assignment,
+      options
+    );
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
@@ -143,5 +147,10 @@ export class AssignmentsService {
     });
 
     return forkJoin(appelsVersAddAssignment);
+  }
+
+  createAssignment(assignmentData: any): Observable<Assignment> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    return this.http.post<Assignment>(`${this.uri}/admin/prof`, assignmentData, {headers});
   }
 }

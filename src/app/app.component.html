@@ -1,19 +1,20 @@
-
-@if(isLogin){
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" mode="side" opened>
-    <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/home">Assignments</a>
-      @if(role!='eleve'){
-        <a mat-list-item routerLink="/add">Nouveau</a>
-      }
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    @if(isLogin){
+<!-- src/app/app.component.html -->
+<ng-container *ngIf="!(loading$ | async); else loadingTemplate">
+  @if(isLogin){
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" mode="side" opened>
+      <mat-toolbar color="primary">Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/home">Assignments</a>
+        <ng-container *ngIf="role !== 'eleve'">
+          <a mat-list-item routerLink="/add">Nouveau</a>
+        </ng-container>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      @if(isLogin){
       <div class="{{namclasstopheader}}">
-        <mat-toolbar color="primary" class="fixed-toolbar " >
+        <mat-toolbar color="primary" class="fixed-toolbar">
           <div class="butt-menu" (click)="menuchange()">
             <button mat-icon-button (click)="drawer.toggle()">
               <mat-icon>menu</mat-icon>
@@ -21,36 +22,42 @@
           </div>
           <span class="spacer"></span>
           <div class="element">
-            <!-- <button mat-button routerLink="/assignments">Assignments</button>
-            <button mat-button routerLink="/accueil">Accueil</button>
-            <button mat-button routerLink="/profile">Profile</button> -->
             <button mat-icon-button [matMenuTriggerFor]="profileMenu">
               <mat-icon>account_circle</mat-icon>
             </button>
           </div>
           <mat-menu #profileMenu="matMenu">
-            <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>Déconnexion</button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>Déconnexion
+            </button>
           </mat-menu>
         </mat-toolbar>
       </div>
-
-    }
-    <div class="content">
-      <router-outlet></router-outlet>
-      @if(isLogin){
-      <mat-toolbar color="primary" class="footer">
-        <!-- <span>&copy; 2024 My Application</span> -->
-        <span class="spacer"></span>
-        <span>&copy; 2024 Application Assignments</span>
-      </mat-toolbar>
-    }
-    </div>
-
-  </mat-sidenav-content>
-</mat-sidenav-container>
-}@else{
+      }
+      <div class="content">
+        <router-outlet></router-outlet>
+        @if(isLogin){
+        <mat-toolbar color="primary" class="footer">
+          <span class="spacer"></span>
+          <span>&copy; 2024 Application Assignments</span>
+        </mat-toolbar>
+        }
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  }@else{
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-}
+  }
+</ng-container>
 
+<!-- Loading Spinner Template -->
+<ng-template #loadingTemplate>
+  <div class="loading-spinner-container">
+    <div class="loading-card">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <p>Chargement...</p>
+    </div>
+  </div>
+</ng-template>

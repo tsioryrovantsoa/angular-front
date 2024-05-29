@@ -13,6 +13,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { MatCardModule } from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { LoadingService } from './shared/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -31,28 +35,31 @@ import { MatCardModule } from '@angular/material/card';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule,
+    CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   isMenuClicked = false;
-
+  loading$: Observable<boolean> = this.loadingService.loading$;
   title = 'Gestion des assignments';
   isLogin: boolean = false;
   role:string|null  = '';
+
   constructor(
     private authService: AuthService,
     private assignmentsService: AssignmentsService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.isLogin = isLoggedIn;
       this.role = localStorage.getItem('roles');
     });
   }
-
   // Deconnexion
   logout() {
     this.authService.logOut();

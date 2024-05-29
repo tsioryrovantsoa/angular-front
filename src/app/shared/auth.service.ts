@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.checkToken());
 
   constructor(
-    private http:HttpClient,private router: Router) { }
+    private http:HttpClient,private router: Router, private loadingService: LoadingService) { }
 
     private checkToken(): boolean {
       const token = localStorage.getItem('token');
@@ -27,6 +28,7 @@ uri = 'http://localhost:8010/api/';
   // auprès d'un serveur...
   logIn(login: string, password: string): Observable<boolean>{
     // console.log("adddddd"+login)
+    this.loadingService.setLoading(true);
     return this.http.post<any>(this.uri+"auth/login", { login, password }).pipe(
       tap(response => {
         if (response && response.data.token) {
@@ -36,10 +38,12 @@ uri = 'http://localhost:8010/api/';
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('id', response.data.id);
           this.loggedIn.next(true);
+          this.loadingService.setLoading(false);
         }
       }),
       catchError(error => {
         console.error('Login failed', error);
+        this.loadingService.setLoading(false);
         return of(false);
       })
     );

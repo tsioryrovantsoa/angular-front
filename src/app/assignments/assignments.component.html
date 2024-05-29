@@ -9,10 +9,9 @@
     <mat-card class="assignment-card">
       <mat-card-header>
         <mat-card-title>{{ assignment.nom }}</mat-card-title>
-        <mat-card-subtitle
-          >{{ assignment.auteur.nom }} -
-          {{ assignment.matiere.nom }}</mat-card-subtitle
-        >
+        <mat-card-subtitle>
+          {{ assignment.auteur.nom }} - {{ assignment.matiere.nom }}
+        </mat-card-subtitle>
         <img
           mat-card-avatar
           [src]="'assets/images/' + assignment.matiere.prof.image"
@@ -30,9 +29,7 @@
       <mat-card-content>
         <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
         <p *ngIf="assignment.note">Note: {{ assignment.note }}</p>
-        <p *ngIf="assignment.remarques">
-          Remarques: {{ assignment.remarques }}
-        </p>
+        <p *ngIf="assignment.remarques">Remarques: {{ assignment.remarques }}</p>
       </mat-card-content>
     </mat-card>
   </div>

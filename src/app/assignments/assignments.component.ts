@@ -24,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AssignmentsComponent implements OnInit {
   assignments: Assignment[] = [];
-  pageSize = 3;
+  pageSize = 9;
   currentPage = 1;
   total =0;
   pagedAssignments: Assignment[] | any = [] ;

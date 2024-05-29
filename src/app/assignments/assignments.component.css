@@ -1,60 +1,16 @@
-table,
-tr,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 20px;
-}
-
-.rendu {
-  color: green;
-}
-
-.nonRendu {
-  color: red;
-  background-color: yellow;
-  border: 2px dashed purple;
-  padding: 5px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.btnAjout {
-  align-self: flex-end;
-}
-
-.demo-table {
-  width: 100%;
-}
-
-.demo-button-container {
-  padding-bottom: 16px;
-}
-
-.example-viewport {
-  height: 300px;
-  width: 800px;
-  border: 1px solid black;
-}
-
-.example-item {
-  height: 50px;
-}
-
-.assignment-card {
-  /* margin: 5px; */
-  min-height: 450px;
-}
-
 .assignment-container {
   display: flex;
-  flex-wrap: wrap; /* Pour permettre le retour à la ligne si nécessaire */
-  justify-content: space-around; /* Pour espacer uniformément les éléments horizontalement */
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .assignment-wrapper {
-  margin: 5px; /* Espacement entre les cartes d'assignation */
+  flex: 1 1 calc(33.333% - 1rem);
+  box-sizing: border-box;
+  margin: 0.5rem;
+}
+
+.assignment-card {
+  width: 100%;
+  box-sizing: border-box;
 }

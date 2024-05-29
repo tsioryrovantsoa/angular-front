@@ -2,7 +2,6 @@
   flex: 1 1 auto;
 } */
 
-
 .navbar {
   position: fixed;
 
@@ -35,7 +34,6 @@ position: relative;
 
 .content {
   padding: 20px;
-  margin-top: 64px;
 }
 
 .fixed-toolbar {

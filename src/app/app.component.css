@@ -34,6 +34,7 @@ position: relative;
 
 .content {
   padding: 20px;
+  margin-top: 64px;
 }
 
 .fixed-toolbar {

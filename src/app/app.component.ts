@@ -41,6 +41,7 @@ export class AppComponent {
 
   title = 'Gestion des assignments';
   isLogin: boolean = false;
+  role:string|null  = '';
   constructor(
     private authService: AuthService,
     private assignmentsService: AssignmentsService,
@@ -48,6 +49,7 @@ export class AppComponent {
   ) {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.isLogin = isLoggedIn;
+      this.role = localStorage.getItem('roles');
     });
   }
 

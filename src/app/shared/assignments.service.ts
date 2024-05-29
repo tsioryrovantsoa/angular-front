@@ -90,7 +90,7 @@ export class AssignmentsService {
     const headers = AuthHeadersUtil.getAuthHeaders();
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri+"/note/"+assignment, { headers });
+    return this.http.put<Assignment>(this.uri+"/note/"+assignment._id, { headers });
   }
 
   noteAssignment(assignment: Assignment): Observable<any> {
@@ -98,9 +98,10 @@ export class AssignmentsService {
     // plus tard on verra comment faire avec une base de données
     // il faudra faire une requête HTTP pour envoyer l'objet modifié
     const headers = AuthHeadersUtil.getAuthHeaders();
+    const options = { headers: headers };
     this.logService.log(assignment.nom, 'modifié');
     //return of("Assignment modifié avec succès");
-    return this.http.put<Assignment>(this.uri, assignment, { headers });
+    return this.http.put<Assignment>(this.uri + "/note/" + assignment._id, assignment, options);
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {

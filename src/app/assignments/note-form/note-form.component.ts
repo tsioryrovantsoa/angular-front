@@ -32,12 +32,13 @@ export class NoteFormComponent {
   assignmentTransmis!: Assignment|any;
 
   onSubmit() {
-    console.log("tayyyyyyy");
+    console.log("tayyyyyyy"+ this.note);
+    console.log("tayyyyyyy"+ this.note);
     if(this.assignmentTransmis) {
       this.assignmentTransmis.rendu = true;
       this.assignmentTransmis.note = this.note;
       this.assignmentTransmis.remarques = this.remarque;
-      this.assignmentsService.updateAssignment(this.assignmentTransmis)
+      this.assignmentsService.noteAssignment(this.assignmentTransmis)
       .subscribe(message => {
         console.log(message);
       });

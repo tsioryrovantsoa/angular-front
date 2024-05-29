@@ -2,13 +2,12 @@
 @if(isLogin){
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" mode="side" opened>
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/home">Assignments</a>
       @if(role!='eleve'){
         <a mat-list-item routerLink="/add">Nouveau</a>
       }
-      <a mat-list-item>Matiere</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

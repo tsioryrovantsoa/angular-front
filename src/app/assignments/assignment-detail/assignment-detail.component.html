@@ -35,11 +35,11 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions class="actions-container">
-    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
     <nav>
       <a routerLink="edit">
         <button mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
       </a>
     </nav>
+    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
   </mat-card-actions>
 </mat-card>

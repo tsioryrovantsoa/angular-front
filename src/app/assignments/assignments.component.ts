@@ -8,6 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from '../shared/loading.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-assignments',
@@ -21,6 +22,7 @@ import { LoadingService } from '../shared/loading.service';
     MatCardModule,
     MatPaginatorModule,
     MatListModule,
+    MatProgressSpinnerModule
   ],
 })
 export class AssignmentsComponent implements OnInit {
@@ -39,27 +41,23 @@ export class AssignmentsComponent implements OnInit {
   ngOnInit() {
     this.getAssignmentsFromService();
   }
-
+  isLoading: boolean = false;
   getAssignmentsFromService() {
-    // setTimeout(() => {
-    //   this.loadingService.setLoading(true);
-    // });
-
+    this.isLoading = true; // Activer le chargement
     this.assignmentsService
       .getAssignmentsPagines(this.currentPage, this.pageSize)
       .subscribe(
         (data) => {
-        this.total = data.data.total;
-        this.assignments = data.data.docs;
-        this.updatePagedAssignments();
-        // setTimeout(() => {
-        //   this.loadingService.setLoading(false);
-        // });
-      });
-      // setTimeout(() => {
-      //   this.loadingService.setLoading(false);
-      // });
-      //
+          this.total = data.data.total;
+          this.assignments = data.data.docs;
+          this.updatePagedAssignments();
+          this.isLoading = false; // Désactiver le chargement une fois les données récupérées
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des données', error);
+          this.isLoading = false; // Désactiver le chargement en cas d'erreur
+        }
+      );
   }
 
   updatePagedAssignments() {

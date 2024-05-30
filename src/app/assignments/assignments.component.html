@@ -1,4 +1,10 @@
-<mat-paginator
+
+@if(isLoading){
+  <div *ngIf="isLoading" class="loading-indicator">
+    <mat-spinner></mat-spinner>
+  </div>
+}@else {
+  <mat-paginator
   [length]="this.total"
   [pageSize]="pageSize"
   (page)="onPageChange($event)"
@@ -37,3 +43,5 @@
 
   </div>
 </div>
+}
+

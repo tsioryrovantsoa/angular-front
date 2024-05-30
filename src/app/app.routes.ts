@@ -8,7 +8,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { MatiereComponent } from './matiere/prof/matiere/matiere.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: AssignmentsComponent },
   { path: 'login', component: LoginComponent },
   { path: "add", component: AddAssignmentComponent },

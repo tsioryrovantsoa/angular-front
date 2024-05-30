@@ -17,17 +17,23 @@ export const authGuard: CanActivateFn = (route, state) => {
   // autorisé à accéder à la page. C'est ASYNCHRONE !
   // Donc la bonne pratique est d'implémenter isAdmin ou isLogged
   // comme une promesse qui renvoie un booléen.
-  return authService.isAdmin()
-    .then(admin => {
-        if (admin) {
-          console.log("GUARD: Navigation autorisée");
-          return true;
-        } else {
-          console.log("GUARD: Navigation NON autorisée");
-          router.navigate(['/home']);
-          return false;
-        }
-      }
-    );
-    
+  // return authService.isAdmin()
+  //   .then(admin => {
+  //       if (admin) {
+  //         console.log("GUARD: Navigation autorisée");
+  //         return true;
+  //       } else {
+  //         console.log("GUARD: Navigation NON autorisée");
+  //         router.navigate(['/home']);
+  //         return false;
+  //       }
+  //     }
+  //   );
+  if (authService.isAuthenticated()) {
+    router.navigate(['/home']); // Redirige vers la page d'accueil si l'utilisateur est authentifié
+    return false;
+  }
+  return true;
+
+
 };

@@ -78,5 +78,10 @@ uri = 'http://localhost:8010/api/';
 
     return promesse;
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
 }
 

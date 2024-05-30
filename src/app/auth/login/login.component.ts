@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -34,5 +34,9 @@ export class LoginComponent {
         });
       }
     });
+  }
+
+  OnInit(){
+    localStorage.removeItem('token');
   }
 }

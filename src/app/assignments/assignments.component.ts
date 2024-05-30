@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingService } from '../shared/loading.service';
 
 @Component({
   selector: 'app-assignments',
@@ -32,7 +33,7 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   constructor(
-    private assignmentsService: AssignmentsService,
+    private assignmentsService: AssignmentsService,private loadingService:LoadingService
   ) {}
 
   ngOnInit() {
@@ -40,14 +41,25 @@ export class AssignmentsComponent implements OnInit {
   }
 
   getAssignmentsFromService() {
+    // setTimeout(() => {
+    //   this.loadingService.setLoading(true);
+    // });
+
     this.assignmentsService
       .getAssignmentsPagines(this.currentPage, this.pageSize)
-      .subscribe((data) => {
+      .subscribe(
+        (data) => {
         this.total = data.data.total;
         this.assignments = data.data.docs;
         this.updatePagedAssignments();
+        // setTimeout(() => {
+        //   this.loadingService.setLoading(false);
+        // });
       });
-
+      // setTimeout(() => {
+      //   this.loadingService.setLoading(false);
+      // });
+      //
   }
 
   updatePagedAssignments() {
@@ -61,6 +73,6 @@ export class AssignmentsComponent implements OnInit {
   }
 
   isDatePassed(date: Date): boolean {
-    return new Date(date) < new Date();
+    return new Date(date) <= new Date();
   }
 }

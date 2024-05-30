@@ -11,7 +11,7 @@
 ></mat-paginator>
 <div class="assignment-container">
   <div *ngFor="let assignment of assignments" class="assignment-wrapper">
-    <a href="/assignments/{{assignment._id}}" class="assignment-link">
+    <a [routerLink]="['/assignments', assignment._id]" class="assignment-link">
       <mat-card class="assignment-card">
         <mat-card-header>
           <mat-card-title>{{ assignment.nom }}</mat-card-title>

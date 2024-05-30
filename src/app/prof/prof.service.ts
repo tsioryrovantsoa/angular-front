@@ -28,4 +28,14 @@ export class ProfService {
     const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.get<Classe[]>(`${this.uri}/classes/matiere/${subjectId}`,{headers});
   }
+
+  getAllAutor(): Observable<any> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    return this.http.get<Prof[]>(`${this.uri}/utilisateurs/eleves`,{headers});
+  }
+
+  getAllMatiere(): Observable<any> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    return this.http.get<Matiere[]>(`${this.uri}/matieres`,{headers});
+  }
 }

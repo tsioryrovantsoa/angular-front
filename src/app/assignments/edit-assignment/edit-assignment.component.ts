@@ -8,6 +8,11 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { Assignment } from '../assignment.model';
 import { AssignmentsService } from '../../shared/assignments.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProfService } from '../../prof/prof.service';
+import { MatiereService } from '../../shared/matiere.service';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -19,50 +24,73 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatFormFieldModule,
     MatDatepickerModule,
     MatButtonModule,
+    CommonModule,
+    MatCardModule,
+    MatSelectModule,
   ],
   templateUrl: './edit-assignment.component.html',
   styleUrl: './edit-assignment.component.css',
 })
 export class EditAssignmentComponent implements OnInit {
-  assignment: Assignment | undefined;
-  // Pour les champs de formulaire
-  nomAssignment = '';
-  dateDeRendu?: Date = undefined;
+  assignmentData: any = {
+    nom: '',
+    dateDeRendu: new Date(),
+    rendu: false,
+    renduauteur: false,
+    matiere: '',
+    auteur: '',
+    note: null,
+    remarques: null,
+  };
+  subjects: any[] = [];
+  auteurs: any[] = [];
+  showProfessor = true;
+  selectedProfessor: string = '';
 
   constructor(
-    private assignmentsService: AssignmentsService,
+    private assignmentService: AssignmentsService,
+    private profService: ProfService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     // on récupère l'id dans l'url
-    const id = +this.route.snapshot.params['id'];
-    this.assignmentsService.getAssignment(id.toString())
-    .subscribe((assignment) => {
-      this.assignment = assignment;
-      // on met à jour les champs du formulaire
-      if (assignment !== undefined) {
-        this.nomAssignment = assignment.nom;
-        this.dateDeRendu = assignment.dateDeRendu;
-      }
-    });
+    const id = this.route.snapshot.params['id'];
+    console.log(id);
+    if (id) {
+      this.loadAssignment(id);
+    }
+    this.loadInitialData();
   }
 
-  onSaveAssignment() {
-    if (!this.assignment) return;
-    if (this.nomAssignment == '' || this.dateDeRendu === undefined) return;
+  loadAssignment(id: string): void {
+    this.assignmentService
+      .getAssignment(id)
+      .subscribe((data) => {
+        this.assignmentData = data.data;
+        console.log(data.data);
+      });
+  }
 
-    // on récupère les valeurs dans le formulaire
-    this.assignment.nom = this.nomAssignment;
-    this.assignment.dateDeRendu = this.dateDeRendu;
-    this.assignmentsService
-      .updateAssignment(this.assignment)
-      .subscribe((message) => {
-        console.log(message);
+  loadInitialData(): void {
+    this.profService
+      .getAllMatiere()
+      .subscribe((data) => (this.subjects = data.data));
+    this.profService
+      .getAllAutor()
+      .subscribe((data) => (this.auteurs = data.data));
+  }
 
-        // navigation vers la home page
+  updateAssignment(): void {
+    this.assignmentService
+      .modifyAssignemnt(this.assignmentData)
+      .subscribe(() => {
         this.router.navigate(['/home']);
       });
+  }
+
+  selectSubject(subjectId: string): void {
+    this.assignmentData.matiere._id = subjectId;
   }
 }

@@ -153,4 +153,11 @@ export class AssignmentsService {
     const headers = AuthHeadersUtil.getAuthHeaders();
     return this.http.post<Assignment>(`${this.uri}/admin/prof`, assignmentData, {headers});
   }
+
+  modifyAssignemnt(assignment: any): Observable<Assignment> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    return this.http.put<Assignment>(this.uri + '/' + assignment._id,assignment, {
+      headers
+    });
+  }
 }

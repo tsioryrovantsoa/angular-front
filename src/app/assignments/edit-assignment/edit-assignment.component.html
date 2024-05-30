@@ -1,20 +1,105 @@
-@if(assignment) {
-<div class="container">
-  <h1>Edition de l'assignment {{assignment.nom}}</h1>
-  <form ngForm class="form" #formupdate (submit)="onSaveAssignment(); formupdate.reset(); ">
-    <mat-form-field>
-      <input matInput placeholder="Edition du nom" [(ngModel)]="nomAssignment" name="assignment-name">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Edition de la date" [(ngModel)]="dateDeRendu" name="date">
-      <mat-datepicker-toggle matSuffix [for]="picker">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="((!nomAssignment)||(!dateDeRendu))">
-      Sauver
-    </button>
-  </form>
- </div>
-}
-
+<!-- assignment-edit.component.html -->
+<h1 class="form-title">Édition d'un assignment</h1>
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form (ngSubmit)="updateAssignment()" class="form">
+        <mat-form-field>
+          <mat-label>Nom de l'assignation</mat-label>
+          <input
+            matInput
+            [(ngModel)]="assignmentData.nom"
+            name="nom"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date de rendu</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="assignmentData.dateDeRendu"
+            name="dateDeRendu"
+            required
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Rendu</mat-label>
+          <mat-select [(ngModel)]="assignmentData.rendu" name="rendu">
+            <mat-option [value]="true">Oui</mat-option>
+            <mat-option [value]="false">Non</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Rendu par l'auteur</mat-label>
+          <mat-select
+            [(ngModel)]="assignmentData.renduauteur"
+            name="renduauteur"
+          >
+            <mat-option [value]="true">Oui</mat-option>
+            <mat-option [value]="false">Non</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="subjects && subjects.length">
+          <mat-label>Matière</mat-label>
+          <mat-select [(ngModel)]="assignmentData.matiere" name="matiere">
+            <mat-option
+              *ngFor="let subject of subjects"
+              [value]="assignmentData.matiere"
+            >
+              {{ subject.nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="auteurs && auteurs.length">
+          <mat-label>Auteur</mat-label>
+          <mat-select [(ngModel)]="assignmentData.auteur" name="auteur">
+            <mat-option
+              *ngFor="let auteur of auteurs"
+              [value]="assignmentData.auteur"
+            >
+              {{ auteur.nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Note</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="assignmentData.note"
+            name="note"
+            min="0" max="20"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Remarques</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="assignmentData.remarques"
+            name="remarques"
+          ></textarea>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="
+            assignmentData.nom == '' ||
+            assignmentData.dateDeRendu === undefined ||
+            assignmentData.matiere == '' ||
+            assignmentData.classe == ''
+          "
+        >
+          Mettre à jour l'assignation
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

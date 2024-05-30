@@ -81,7 +81,11 @@ uri = 'http://localhost:8010/api/';
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    return !!token;
+    if (token!=null) {
+      return false
+    }else{
+      return true
+    }
   }
 }
 

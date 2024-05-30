@@ -3,21 +3,17 @@ import { AssignmentsComponent } from './assignments/assignments.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
-import { authGuard } from './shared/auth.guard';
+import { AuthGuard } from './shared/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { MatiereComponent } from './matiere/prof/matiere/matiere.component';
+import { LoginGuard } from './shared//login.guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: AssignmentsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: "add", component: AddAssignmentComponent },
-  { path: "assignments/:id", component: AssignmentDetailComponent},
-  {
-    path: "assignments/:id/edit",
-    component: EditAssignmentComponent,
-    canActivate: [authGuard]
-  },
-  { path: "matieres/:id", component: MatiereComponent}
+  { path: '', pathMatch: 'full', redirectTo: '/login' },
+  { path: 'home', component: AssignmentsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: "add", component: AddAssignmentComponent, canActivate: [AuthGuard] },
+  { path: "assignments/:id", component: AssignmentDetailComponent, canActivate: [AuthGuard] },
+  { path: "assignments/:id/edit", component: EditAssignmentComponent, canActivate: [AuthGuard] },
+  { path: "matieres/:id", component: MatiereComponent, canActivate: [AuthGuard] }
 ];

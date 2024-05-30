@@ -21,9 +21,11 @@ export class AssignmentsService {
   // uri = "https://angular-back-2.onrender.com/api/assignments";
 
   // retourne tous les assignments
-  getAssignments(): Observable<Assignment[]> {
+  getAssignments(): Observable<any> {
     const headers = AuthHeadersUtil.getAuthHeaders();
-    return this.http.get<Assignment[]>(this.uri, { headers });
+    return this.http
+      .get<{ data: { docs: Assignment[] } }>(this.uri, { headers })
+      .pipe(map((response) => response.data.docs));
   }
 
   getAssignmentsPagines(page: number, limit: number): Observable<any> {
@@ -151,13 +153,21 @@ export class AssignmentsService {
 
   createAssignment(assignmentData: any): Observable<Assignment> {
     const headers = AuthHeadersUtil.getAuthHeaders();
-    return this.http.post<Assignment>(`${this.uri}/admin/prof`, assignmentData, {headers});
+    return this.http.post<Assignment>(
+      `${this.uri}/admin/prof`,
+      assignmentData,
+      { headers }
+    );
   }
 
   modifyAssignemnt(assignment: any): Observable<Assignment> {
     const headers = AuthHeadersUtil.getAuthHeaders();
-    return this.http.put<Assignment>(this.uri + '/' + assignment._id,assignment, {
-      headers
-    });
+    return this.http.put<Assignment>(
+      this.uri + '/' + assignment._id,
+      assignment,
+      {
+        headers,
+      }
+    );
   }
 }

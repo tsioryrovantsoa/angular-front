@@ -1,0 +1,32 @@
+<!-- assignment-list.component.html -->
+<mat-tab-group>
+  <mat-tab label="Non Rendus">
+    <div class="assignments-container">
+      <div *ngFor="let assignment of nonRenduAssignments" class="assignment-card">
+        <mat-card>
+          <mat-card-title>{{ assignment.nom }}</mat-card-title>
+          <mat-card-content>
+            <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
+            <!-- Bouton pour ouvrir le dialogue de notation -->
+            <button mat-raised-button color="primary" (click)="openDialog(assignment)">
+              Noter
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Rendus">
+    <div class="assignments-container">
+      <div *ngFor="let assignment of renduAssignments" class="assignment-card">
+        <mat-card>
+          <mat-card-title>{{ assignment.nom }}</mat-card-title>
+          <mat-card-content>
+            <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
+            <p>Note: {{ assignment.note }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

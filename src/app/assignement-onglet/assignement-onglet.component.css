@@ -1,0 +1,26 @@
+/* assignment-list.component.css */
+.assignments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.assignment-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card {
+  padding:10px;
+  width: 100%;
+}
+
+mat-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+mat-card-content p {
+  margin: 10px 0;
+}

@@ -5,46 +5,35 @@
 ></mat-paginator>
 <div class="assignment-container">
   <div *ngFor="let assignment of assignments" class="assignment-wrapper">
-    <mat-card class="assignment-card">
-      <mat-card-header>
-        <mat-card-title>{{ assignment.nom }}</mat-card-title>
-        <mat-card-subtitle>
-          {{ assignment.auteur.nom }} - {{ assignment.matiere.nom }}
-        </mat-card-subtitle>
-        <img
-          mat-card-avatar
-          [src]="'assets/images/' + assignment.matiere.prof.image"
-          alt="{{ assignment.matiere.prof.nom }}"
-        />
-      </mat-card-header>
-      <div class="image-container">
-        <img
-          mat-card-image
-          [src]="'assets/images/' + assignment.matiere.image"
-          *ngIf="assignment.matiere.image"
-          alt="{{ assignment.matiere.nom }}"
-          class="matiere-image"
-        />
-      </div>
-      <mat-card-content>
-        <p [ngClass]="{'date-passee': isDatePassed(assignment.dateDeRendu)}">
-          Date de rendu : <strong>{{ assignment.dateDeRendu | date: 'dd MMMM yyyy' }}</strong>
-        </p>
-        <ng-container *ngIf="assignment.rendu">
-          <p
-            *ngIf="assignment.note !== null"
-            [ngClass]="{
-              passable: assignment.note < 10,
-              bien: assignment.note >= 10 && assignment.note < 15,
-              'tres-bien': assignment.note >= 15
-            }"
-            class="note"
-          >
-            Note : <strong>{{ assignment.note }} / 20</strong>
+    <a href="/assignments/{{assignment._id}}" class="assignment-link">
+      <mat-card class="assignment-card">
+        <mat-card-header>
+          <mat-card-title>{{ assignment.nom }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ assignment.auteur.nom }} - {{ assignment.matiere.nom }}
+          </mat-card-subtitle>
+          <img
+            mat-card-avatar
+            [src]="'assets/images/' + assignment.matiere.prof.image"
+            alt="{{ assignment.matiere.prof.nom }}"
+          />
+        </mat-card-header>
+        <div class="image-container">
+          <img
+            mat-card-image
+            [src]="'assets/images/' + assignment.matiere.image"
+            *ngIf="assignment.matiere.image"
+            alt="{{ assignment.matiere.nom }}"
+            class="matiere-image"
+          />
+        </div>
+        <mat-card-content>
+          <p [ngClass]="{'date-passee': isDatePassed(assignment.dateDeRendu)}">
+            Date de rendu : <strong>{{ assignment.dateDeRendu | date: 'dd MMMM yyyy' }}</strong>
           </p>
-          <p *ngIf="assignment.remarques">Remarques : {{ assignment.remarques }}</p>
-        </ng-container>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </a>
+
   </div>
 </div>

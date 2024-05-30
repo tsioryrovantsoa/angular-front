@@ -11,9 +11,15 @@
     <div class="author-details">
       <h4>Auteur: {{ assignmentTransmis?.auteur?.nom }}</h4>
       @if(assignmentTransmis?.note !== null){
-      <h4>
+      <h4
+      [ngClass]="{
+        passable: assignmentTransmis.note < 10,
+        bien: assignmentTransmis.note >= 10 && assignmentTransmis.note < 15,
+        'tres-bien': assignmentTransmis.note >= 15
+      }"
+       class="note">
         Note:
-        <span>{{ assignmentTransmis?.note }}</span>
+        <span>{{ assignmentTransmis?.note }}/20</span>
 
       </h4>
       <h4>Remarques: {{ assignmentTransmis?.remarques }}</h4>

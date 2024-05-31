@@ -49,6 +49,7 @@ export class AppComponent {
   title = 'Gestion des assignments';
   isLogin: boolean = false;
   role:string|null  = '';
+  name: string|null = '';
 
   constructor(
     private authService: AuthService,
@@ -63,6 +64,7 @@ export class AppComponent {
       });
       this.isLogin = isLoggedIn;
       this.role = localStorage.getItem('roles');
+      this.name = localStorage.getItem('name');
     });
   }
   // Deconnexion

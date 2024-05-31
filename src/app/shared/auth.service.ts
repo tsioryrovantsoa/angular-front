@@ -20,7 +20,7 @@ export class AuthService {
       return token !== null;
     }
 
-uri = 'http://localhost:8010/api/';
+uri = 'https://angular-back-2.onrender.com/api/';
 
   // méthode pour connecter l'utilisateur
   // Typiquement, il faudrait qu'elle accepte en paramètres

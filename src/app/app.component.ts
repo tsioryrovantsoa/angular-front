@@ -59,9 +59,6 @@ export class AppComponent {
     private snackBar: MatSnackBar
   ) {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-      this.snackBar.open('Connexion réussie ✔️', 'Fermer', {
-        duration: 3000
-      });
       this.isLogin = isLoggedIn;
       this.role = localStorage.getItem('roles');
       this.name = localStorage.getItem('name');

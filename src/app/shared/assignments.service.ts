@@ -124,12 +124,19 @@ export class AssignmentsService {
   peuplerBD() {
     // on utilise les données de test générées avec mockaroo.com pour peupler la base
     // de données
+    console.log("TAYYYYYYYYY");
     bdInitialAssignments.forEach((a) => {
       let nouvelAssignment = new Assignment();
       nouvelAssignment.nom = a.nom;
       nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
       nouvelAssignment.rendu = a.rendu;
-
+      nouvelAssignment.note = a.note;
+      nouvelAssignment.__v = a.__v;
+      nouvelAssignment.auteur = a.auteur;
+      nouvelAssignment.remarques = a.remarques;
+      nouvelAssignment.renduauteur = a.renduauteur;
+      nouvelAssignment.matiere=a.matiere;
+      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
       this.addAssignment(nouvelAssignment).subscribe(() => {
         console.log('Assignment ' + a.nom + ' ajouté');
       });

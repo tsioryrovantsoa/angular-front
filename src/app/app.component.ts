@@ -66,6 +66,7 @@ export class AppComponent {
       this.role = localStorage.getItem('roles');
       this.name = localStorage.getItem('name');
     });
+    // this.assignmentsService.peuplerBD();
   }
   // Deconnexion
   logout() {

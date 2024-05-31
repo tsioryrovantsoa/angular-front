@@ -31,6 +31,8 @@ Ajout des propriétés suivantes : Auteur (nom ou photo de l'élève), Matière,
 
 Affichage conditionnel du bouton noter et les notes pour les assiggnemnts noter et non  noter.
 
+Generation de 1000 assignments.
+
 # 4-Fonctionnalités optionnelles faites 
 
 Séparation des Assignments en deux onglets : rendus et non rendus.

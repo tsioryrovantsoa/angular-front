@@ -170,4 +170,12 @@ export class AssignmentsService {
       }
     );
   }
+
+  getAssignmentsWithLimit(rendu: boolean): Observable<any> {
+    const headers = AuthHeadersUtil.getAuthHeaders();
+    const url = `${this.uri}/withlimit?rendu=${rendu}`;
+    return this.http.get<any[]>(url, {
+      headers,
+    });
+  }
 }

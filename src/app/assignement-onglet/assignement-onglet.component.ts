@@ -37,10 +37,16 @@ export class AssignementOngletComponent {
   }
 
   loadAssignments(): void {
-    this.assignmentService.getAssignments().subscribe((assignments: Assignment[]) => {
-      console.log(assignments); // Affichez les assignments pour le débogage
-      this.nonRenduAssignments = assignments.filter((assignment: Assignment) => !assignment.rendu);
-      this.renduAssignments = assignments.filter((assignment: Assignment) => assignment.rendu);
+    // Appel API pour les assignments rendus
+    this.assignmentService.getAssignmentsWithLimit(true).subscribe((data) => {
+      console.log(data); // Affichez les assignments pour le débogage
+      this.renduAssignments = data.data;
+    });
+
+    // Appel API pour les assignments non rendus
+    this.assignmentService.getAssignmentsWithLimit(false).subscribe((data) => {
+      console.log(data); // Affichez les assignments pour le débogage
+      this.nonRenduAssignments = data.data;
     });
   }
 

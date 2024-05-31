@@ -9,6 +9,9 @@
         <ng-container *ngIf="role !== 'eleve'">
           <a mat-list-item routerLink="/add">Nouveau</a>
         </ng-container>
+        <ng-container *ngIf="role == 'admin'">
+        <a mat-list-item routerLink="/onglets">Rendu/Non Rendu</a>
+      </ng-container>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

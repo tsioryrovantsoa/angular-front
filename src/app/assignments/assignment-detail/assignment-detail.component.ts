@@ -35,14 +35,14 @@ export class AssignmentDetailComponent implements OnInit {
               public dialog: MatDialog,
               private snackBar: MatSnackBar) { }
 
-
+role : any
 isLoading: boolean = false;
   ngOnInit() {
     // Recuperation des query params (ce qui suit le ? dans l'url)
     console.log(this.route.snapshot.queryParams);
     // Recuperation des fragment (ce qui suit le # dans l'url)
     console.log(this.route.snapshot.fragment);
-
+    this.role = localStorage.getItem('roles');
     // On recupere l'id de l'assignment dans l'URL à l'aide de ActivatedRoute
     const id = this.route.snapshot.params['id'];
     console.log("ity ilay id",id);

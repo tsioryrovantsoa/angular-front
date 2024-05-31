@@ -70,14 +70,30 @@ uri = 'https://angular-back-2.onrender.com/api/';
   // si on l'utilisait à la main dans un composant, on ferait:
   // this.authService.isAdmin().then(....) ou
   // admin = await this.authService.isAdmin()
-  isAdmin() {
-    const promesse = new Promise((resolve, reject) => {
-      // ici accès BD? Web Service ? etc...
-      resolve(this.loggedIn);
-      // pas de cas d'erreur ici, donc pas de reject
-    });
+  // isAdmin() {
+  //   const promesse = new Promise((resolve, reject) => {
+  //     // ici accès BD? Web Service ? etc...
+  //     resolve(this.loggedIn);
+  //     // pas de cas d'erreur ici, donc pas de reject
+  //   });
 
-    return promesse;
+  //   return promesse;
+  // }
+
+  isAdmin(): boolean {
+     const role = this.getCurrentUser();
+    if (role == "admin") {
+      return  true;
+    }else{
+      return  false;
+    }
+  }
+
+   // Méthode pour récupérer l'utilisateur actuel
+   getCurrentUser() {
+    // Implémentez cette méthode selon votre logique d'authentification
+    // Par exemple, récupérer les informations de l'utilisateur depuis le localStorage ou via une requête HTTP
+    return localStorage.getItem('roles');
   }
 
   isAuthenticated(): boolean {

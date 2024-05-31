@@ -9,6 +9,7 @@ import { MatiereComponent } from './matiere/prof/matiere/matiere.component';
 import { LoginGuard } from './shared//login.guard';
 import { AssignementOngletComponent } from './assignement-onglet/assignement-onglet.component';
 import { AssignementDragAndDropComponent } from './assignement-drag-and-drop/assignement-drag-and-drop.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -20,4 +21,5 @@ export const routes: Routes = [
   { path: "matieres/:id", component: MatiereComponent, canActivate: [AuthGuard] },
   { path: 'onglets', component: AssignementOngletComponent, canActivate: [AuthGuard] },
   { path: 'drag-and-drop', component: AssignementDragAndDropComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
 ];

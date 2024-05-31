@@ -11,6 +11,7 @@ import { LoadingService } from '../shared/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observer } from 'rxjs';
 
 @Component({
   selector: 'app-assignments',
@@ -45,28 +46,60 @@ export class AssignmentsComponent implements OnInit {
     this.getAssignmentsFromService();
   }
   isLoading: boolean = false;
+  // getAssignmentsFromService() {
+  //   this.isLoading = true; // Activer le chargement
+  //   this.assignmentsService
+  //     .getAssignmentsPagines(this.currentPage, this.pageSize)
+  //     .subscribe(
+  //       (data) => {
+  //         this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+  //           duration: 3000
+  //         });
+  //         this.total = data.data.total;
+  //         this.assignments = data.data.docs;
+  //         this.updatePagedAssignments();
+
+  //       },
+  //       (error) => {
+  //         this.snackBar.open(`${error} ✔️`, 'Fermer', {
+  //           duration: 3000
+  //         });
+  //         console.error('Erreur lors de la récupération des données', error);
+
+  //       }
+  //     );
+  // }
+
   getAssignmentsFromService() {
-    this.isLoading = true; // Activer le chargement
+    this.isLoading = true;
+    // Création de l'observateur partiel
+    const result: Partial<Observer<any>> = {
+      next: (data) => {
+        // Activer le chargement
+        this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
+        this.total = data.data.total;
+        this.assignments = data.data.docs;
+        this.updatePagedAssignments();
+      },
+      error: (error) => {
+        this.snackBar.open(`${error} ✔️`, 'Fermer', {
+          duration: 3000
+        });
+        console.error('Erreur lors de la récupération des données', error);
+        this.isLoading = false; // Désactiver le chargement en cas d'erreur
+      },
+      complete: () => {
+        console.log("tay");
+        this.isLoading = false; // Désactiver le chargement quand c'est terminé
+      },
+    };
+
+    // Utilisation de l'observateur dans la souscription
     this.assignmentsService
       .getAssignmentsPagines(this.currentPage, this.pageSize)
-      .subscribe(
-        (data) => {
-          this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
-            duration: 3000
-          });
-          this.total = data.data.total;
-          this.assignments = data.data.docs;
-          this.updatePagedAssignments();
-          this.isLoading = false; // Désactiver le chargement une fois les données récupérées
-        },
-        (error) => {
-          this.snackBar.open(`${error} ✔️`, 'Fermer', {
-            duration: 3000
-          });
-          console.error('Erreur lors de la récupération des données', error);
-          this.isLoading = false; // Désactiver le chargement en cas d'erreur
-        }
-      );
+      .subscribe(result);
   }
 
   updatePagedAssignments() {

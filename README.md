@@ -55,6 +55,10 @@ Installer les dépendances
 
 > npm install
 
+Lancer le projet
+
+> ng serve
+
 L'application sera accessible sur http://localhost:4200.
 
 LOGIN ET MOT DE PASSE 

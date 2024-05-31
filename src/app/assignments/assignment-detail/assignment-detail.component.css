@@ -1,43 +1,59 @@
 .assignment-card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  flex-direction: row;
+  width: 100%; /* Assure que la carte prend toute la largeur disponible */
 }
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%; /* Assure que le contenu de la carte prend toute la largeur disponible */
+}
+
+.left-section {
+  flex: 0 0 auto; /* Garde la taille de la section de gauche non flexible */
+}
+
+.right-section {
+  flex: 1; /* Fait en sorte que la section de droite prenne tout l'espace disponible */
+}
+
+.matiere-image {
+  width: 500px; /* Taille de l'image de la matière, ajustez selon vos besoins */
+  height: auto;
+  margin-right: 20px; /* Espacement entre l'image et le contenu de droite */
+}
+
+.actions-container {
+  margin-right: 20px;
+}
+
 
 .card-header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: center;
+  align-items: left;
 }
 
 .card-title-section {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   width: 100%;
-  align-items: center;
+  align-items: left;
 }
 
 .card-title {
-  text-align: center;
+  text-align: left;
 }
 
 .author-details {
-  text-align: center;
-}
-
-.matiere-image {
-  width: 100px;
-  height: 100px;
-  margin-top: 10px;
+  text-align: left;
 }
 
 .actions-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   width: 100%;
   margin-top: 20px;
 }

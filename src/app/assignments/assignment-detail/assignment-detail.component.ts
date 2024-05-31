@@ -51,6 +51,7 @@ export class AssignmentDetailComponent implements OnInit {
         duration: 3000
       });
       console.log("haha"+JSON.stringify(assignment) )
+      console.log(assignment);
       this.assignmentTransmis = assignment.data;
     });
   }

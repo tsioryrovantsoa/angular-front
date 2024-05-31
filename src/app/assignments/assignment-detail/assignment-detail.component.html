@@ -1,45 +1,49 @@
 <mat-card class="assignment-card">
-  <div class="card-header">
-    <div class="card-title-section">
-      <div class="card-title">
-        <h2>{{ assignmentTransmis?.nom }}</h2>
-        <h3>{{ assignmentTransmis?.matiere?.nom }}</h3>
-        <h4>{{ assignmentTransmis?.matiere?.prof?.nom }}</h4>
-      </div>
+  <div class="card-content">
+    <div class="left-section">
+      <img class="matiere-image" *ngIf="assignmentTransmis?.matiere?.image" [src]="'assets/images/' + assignmentTransmis?.matiere?.image" alt="Matière Image" />
     </div>
-    <mat-divider></mat-divider>
-    <div class="author-details">
-      <h4>Auteur: {{ assignmentTransmis?.auteur?.nom }}</h4>
-      @if(assignmentTransmis?.note !== null){
-      <h4
-      [ngClass]="{
-        passable: assignmentTransmis.note < 10,
-        bien: assignmentTransmis.note >= 10 && assignmentTransmis.note < 15,
-        'tres-bien': assignmentTransmis.note >= 15
-      }"
-       class="note">
-        Note:
-        <span>{{ assignmentTransmis?.note }}/20</span>
-
-      </h4>
-      <h4>Remarques: {{ assignmentTransmis?.remarques }}</h4>
-    }@else{
-      <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openDialog()">Noter</button>
-    }
+    <div class="right-section">
+      <div class="card-header">
+        <div class="card-title-section">
+          <div class="card-title">
+            <h2>{{ assignmentTransmis?.nom }}</h2>
+            <h3>{{ assignmentTransmis?.matiere?.nom }}</h3>
+            <h4>{{ assignmentTransmis?.matiere?.prof?.nom }}</h4>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="author-details">
+          <h4>Auteur : {{ assignmentTransmis?.auteur?.nom }}</h4>
+          <ng-container *ngIf="assignmentTransmis?.note !== null; else notRated">
+            <h4 [ngClass]="{
+                  passable: assignmentTransmis.note < 10,
+                  bien: assignmentTransmis.note >= 10 && assignmentTransmis.note < 15,
+                  'tres-bien': assignmentTransmis.note >= 15
+                }" class="note">
+              Note:
+              <span>{{ assignmentTransmis?.note }}/20</span>
+            </h4>
+            <h4>Remarques : {{ assignmentTransmis?.remarques }}</h4>
+          </ng-container>
+          <ng-template #notRated>
+            <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openDialog()">Noter</button>
+          </ng-template>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-card-subtitle>Date de rendu : {{ assignmentTransmis?.dateDeRendu | date }}</mat-card-subtitle>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions class="actions-container">
+        <nav>
+          <a routerLink="edit">
+            <button mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
+          </a>
+        </nav>
+        <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
+      </mat-card-actions>
     </div>
   </div>
-  <mat-divider></mat-divider>
-  <img class="matiere-image" *ngIf="assignmentTransmis?.matiere?.image" [src]="'assets/images/' + assignmentTransmis?.matiere?.image" alt="Matière Image" />
-  <mat-card-content>
-    <mat-card-subtitle>Date de rendu: {{ assignmentTransmis?.dateDeRendu | date }}</mat-card-subtitle>
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-actions class="actions-container">
-    <nav>
-      <a routerLink="edit">
-        <button mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
-      </a>
-    </nav>
-    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
-  </mat-card-actions>
 </mat-card>

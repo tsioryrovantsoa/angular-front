@@ -30,7 +30,7 @@
             <h4>Remarques : {{ assignmentTransmis?.remarques }}</h4>
           </ng-container>
           <ng-template #notRated>
-            <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null" (click)="openDialog()">Noter</button>
+            <button mat-raised-button color="primary" *ngIf="assignmentTransmis?.note === null && role !== 'eleve'" (click)="openDialog()">Noter</button>
           </ng-template>
         </div>
       </div>
@@ -42,10 +42,10 @@
       <mat-card-actions class="actions-container">
         <nav>
           <a routerLink="edit">
-            <button mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
+            <button *ngIf="role !== 'eleve'" mat-raised-button color="primary" [disabled]="!isAdmin()">EDIT</button>
           </a>
         </nav>
-        <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
+        <button *ngIf="role !== 'eleve'" mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">DELETE</button>
       </mat-card-actions>
     </div>
   </div>

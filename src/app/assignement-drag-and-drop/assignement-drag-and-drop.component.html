@@ -1,0 +1,31 @@
+<div class="assignments-container">
+  <div class="column">
+    <h2>Non Rendus</h2>
+    <div cdkDropList [cdkDropListData]="nonRenduAssignments" (cdkDropListDropped)="drop($event)" class="assignment-list">
+      <div *ngFor="let assignment of nonRenduAssignments" class="assignment-card" cdkDrag [cdkDragData]="assignment">
+        <mat-card>
+          <mat-card-title class="title">{{ assignment.nom }}</mat-card-title>
+          <mat-card-content>
+            <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <h2>Rendus</h2>
+    <div cdkDropList [cdkDropListData]="renduAssignments" (cdkDropListDropped)="drop($event)" class="assignment-list">
+      <div *ngFor="let assignment of renduAssignments" class="assignment-card" cdkDrag [cdkDragData]="assignment">
+        <mat-card>
+          <mat-card-title class="title">{{ assignment.nom }}</mat-card-title>
+          <mat-card-content>
+            <p>Date de rendu: {{ assignment.dateDeRendu | date }}</p>
+            <p>Note: {{ assignment.note }}</p>
+            <p>Remarque: {{ assignment.remarques }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

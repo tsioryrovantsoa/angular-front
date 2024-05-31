@@ -41,6 +41,7 @@ export class NoteFormComponent {
       this.assignmentsService.noteAssignment(this.assignmentTransmis)
       .subscribe(message => {
         console.log(message);
+        return message;
       });
     }
     // this.dialogRef.close({ note: this.note, remarque: this.remarque });

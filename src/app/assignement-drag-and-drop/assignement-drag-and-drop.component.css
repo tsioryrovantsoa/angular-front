@@ -1,0 +1,25 @@
+.assignments-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  padding: 10px;
+}
+
+.assignment-list {
+  border: 1px solid #ccc;
+  min-height: 400px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.title{
+  padding:10px;
+}
+
+.assignment-card {
+  padding: 10px;
+  margin-bottom: 10px;
+}

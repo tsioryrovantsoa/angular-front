@@ -9,7 +9,7 @@ import { AuthHeadersUtil } from '../utils/auth-headers.util';
   providedIn: 'root'
 })
 export class MatiereService {
-  private baseUrl = 'http://localhost:8010/api/';
+  private baseUrl = 'https://angular-back-2.onrender.com/api/';
 
   constructor(private http: HttpClient) {}
 

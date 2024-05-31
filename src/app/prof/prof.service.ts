@@ -10,7 +10,7 @@ import { AuthHeadersUtil } from '../utils/auth-headers.util';
   providedIn: 'root',
 })
 export class ProfService {
-  private uri = 'http://localhost:8010/api';
+  private uri = 'https://angular-back-2.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 

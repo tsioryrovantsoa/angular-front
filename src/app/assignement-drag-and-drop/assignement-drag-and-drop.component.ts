@@ -54,8 +54,8 @@ export class AssignementDragAndDropComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       this.loadAssignments();
+      console.log("Appel de load Assignement");
     });
   }
 

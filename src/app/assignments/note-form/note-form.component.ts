@@ -31,21 +31,17 @@ export class NoteFormComponent {
   remarque: string | null = null;
   assignmentTransmis!: Assignment|any;
 
-  onSubmit() {
-    console.log("tayyyyyyy"+ this.note);
-    console.log("tayyyyyyy"+ this.note);
-    if(this.assignmentTransmis) {
+  onSubmit(): void {
+    if (this.assignmentTransmis) {
       this.assignmentTransmis.rendu = true;
       this.assignmentTransmis.note = this.note;
-      this.assignmentTransmis.remarques = this.remarque;
-      this.assignmentsService.noteAssignment(this.assignmentTransmis)
-      .subscribe(message => {
-        console.log(message);
-        return message;
+      this.assignmentTransmis.remarque = this.remarque;
+      this.assignmentsService.noteAssignment(this.assignmentTransmis).subscribe((message) => {
+        this.dialogRef.close({ note: this.note, remarque: this.remarque });
       });
+    } else {
+      this.dialogRef.close();
     }
-    // this.dialogRef.close({ note: this.note, remarque: this.remarque });
-    this.dialogRef.close();
   }
 
   ngOnInit() {

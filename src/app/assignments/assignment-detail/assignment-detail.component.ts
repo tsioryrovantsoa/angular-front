@@ -13,12 +13,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoteFormComponent } from '../note-form/note-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observer } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink,MatDividerModule, MatDialogModule,
+  imports: [CommonModule, RouterLink,MatDividerModule, MatDialogModule, MatProgressSpinnerModule,
     MatButtonModule, MatCardModule, MatCheckboxModule],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
@@ -34,7 +36,7 @@ export class AssignmentDetailComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
 
-
+isLoading: boolean = false;
   ngOnInit() {
     // Recuperation des query params (ce qui suit le ? dans l'url)
     console.log(this.route.snapshot.queryParams);
@@ -45,15 +47,32 @@ export class AssignmentDetailComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     console.log("ity ilay id",id);
     // On utilise le service pour récupérer l'assignment avec cet id
-    this.assignmentsService.getAssignment(id)
-    .subscribe(assignment => {
-      this.snackBar.open(`${assignment.message} ✔️`, 'Fermer', {
-        duration: 3000
-      });
-      console.log("haha"+JSON.stringify(assignment) )
-      console.log(assignment);
-      this.assignmentTransmis = assignment.data;
-    });
+    this.isLoading = true; // Activer le chargement
+
+    // Création de l'observateur partiel pour l'appel API
+    const observer: Partial<Observer<any>> = {
+      next: (assignment) => {
+        this.snackBar.open(`${assignment.message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
+        console.log("haha" + JSON.stringify(assignment));
+        console.log(assignment);
+        this.assignmentTransmis = assignment.data;
+      },
+      error: (error) => {
+        this.snackBar.open(`${error.message || 'Erreur lors de la récupération des données'} ✔️`, 'Fermer', {
+          duration: 3000
+        });
+        console.error('Erreur lors de la récupération des données', error);
+        this.isLoading = false; // Désactiver le chargement en cas d'erreur
+      },
+      complete: () => {
+        this.isLoading = false; // Désactiver le chargement quand c'est terminé
+      },
+    };
+
+    // Appel API pour récupérer l'assignment par ID
+    this.assignmentsService.getAssignment(id).subscribe(observer);
   }
 
   onAssignmentRendu() {

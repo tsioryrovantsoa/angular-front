@@ -1,4 +1,7 @@
-<mat-card class="assignment-card">
+<div *ngIf="isLoading" class="loading-indicator">
+  <mat-spinner></mat-spinner>
+</div>
+<mat-card *ngIf="!isLoading" class="assignment-card">
   <div class="card-content">
     <div class="left-section">
       <img class="matiere-image" *ngIf="assignmentTransmis?.matiere?.image" [src]="'assets/images/' + assignmentTransmis?.matiere?.image" alt="Matière Image" />

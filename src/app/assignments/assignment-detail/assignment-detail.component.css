@@ -55,7 +55,6 @@
   display: flex;
   justify-content: left;
   width: 100%;
-  margin-top: 20px;
 }
 
 .actions-container button,
@@ -65,7 +64,7 @@
 
 mat-divider {
   width: 100%;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .passable {

@@ -17,6 +17,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LoadingService } from './shared/loading.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -53,9 +54,13 @@ export class AppComponent {
     private authService: AuthService,
     private assignmentsService: AssignmentsService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private snackBar: MatSnackBar
   ) {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      this.snackBar.open('Connexion réussie ✔️', 'Fermer', {
+        duration: 3000
+      });
       this.isLogin = isLoggedIn;
       this.role = localStorage.getItem('roles');
     });

@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-assignement-onglet',
@@ -29,7 +30,8 @@ export class AssignementOngletComponent {
 
   constructor(
     private assignmentService: AssignmentsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -39,12 +41,18 @@ export class AssignementOngletComponent {
   loadAssignments(): void {
     // Appel API pour les assignments rendus
     this.assignmentService.getAssignmentsWithLimit(true).subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       console.log(data); // Affichez les assignments pour le débogage
       this.renduAssignments = data.data;
     });
 
     // Appel API pour les assignments non rendus
     this.assignmentService.getAssignmentsWithLimit(false).subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       console.log(data); // Affichez les assignments pour le débogage
       this.nonRenduAssignments = data.data;
     });
@@ -57,6 +65,9 @@ export class AssignementOngletComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
+      this.snackBar.open(`${result} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       this.loadAssignments();
     });
   }

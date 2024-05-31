@@ -12,6 +12,7 @@ import { AuthService } from '../../shared/auth.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoteFormComponent } from '../note-form/note-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class AssignmentDetailComponent implements OnInit {
               private authService:AuthService,
               private route:ActivatedRoute,
               private router:Router,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) { }
 
 
 
@@ -45,6 +47,9 @@ export class AssignmentDetailComponent implements OnInit {
     // On utilise le service pour récupérer l'assignment avec cet id
     this.assignmentsService.getAssignment(id)
     .subscribe(assignment => {
+      this.snackBar.open(`${assignment.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       console.log("haha"+JSON.stringify(assignment) )
       this.assignmentTransmis = assignment.data;
     });
@@ -56,6 +61,9 @@ export class AssignmentDetailComponent implements OnInit {
       this.assignmentTransmis.rendu = true;
       this.assignmentsService.updateAssignment(this.assignmentTransmis)
       .subscribe(message => {
+        this.snackBar.open(`${message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
         console.log(message);
         // on navigue vers la liste des assignments
         this.router.navigate(['/home']);
@@ -68,6 +76,9 @@ export class AssignmentDetailComponent implements OnInit {
     if(this.assignmentTransmis) {
       this.assignmentsService.deleteAssignment(this.assignmentTransmis)
       .subscribe(message => {
+        this.snackBar.open(`${message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
         console.log(message);
         // on va cacher la vue de detail en mettant assignmentTransmis à undefined
         this.assignmentTransmis = undefined;
@@ -103,6 +114,9 @@ export class AssignmentDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.snackBar.open(`${result} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       console.log('The dialog was closed');
       this.animal = result;
     });

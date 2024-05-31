@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from '../shared/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-assignments',
@@ -37,7 +38,7 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
 
   constructor(
-    private assignmentsService: AssignmentsService,private loadingService:LoadingService
+    private assignmentsService: AssignmentsService,private loadingService:LoadingService,     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -50,12 +51,18 @@ export class AssignmentsComponent implements OnInit {
       .getAssignmentsPagines(this.currentPage, this.pageSize)
       .subscribe(
         (data) => {
+          this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+            duration: 3000
+          });
           this.total = data.data.total;
           this.assignments = data.data.docs;
           this.updatePagedAssignments();
           this.isLoading = false; // Désactiver le chargement une fois les données récupérées
         },
         (error) => {
+          this.snackBar.open(`${error} ✔️`, 'Fermer', {
+            duration: 3000
+          });
           console.error('Erreur lors de la récupération des données', error);
           this.isLoading = false; // Désactiver le chargement en cas d'erreur
         }

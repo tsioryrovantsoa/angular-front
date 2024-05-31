@@ -13,6 +13,7 @@ import { MatiereService } from '../../shared/matiere.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-assignment',
@@ -51,7 +52,8 @@ export class EditAssignmentComponent implements OnInit {
     private assignmentService: AssignmentsService,
     private profService: ProfService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -65,27 +67,37 @@ export class EditAssignmentComponent implements OnInit {
   }
 
   loadAssignment(id: string): void {
-    this.assignmentService
-      .getAssignment(id)
-      .subscribe((data) => {
-        this.assignmentData = data.data;
-        console.log(data.data);
+    this.assignmentService.getAssignment(id).subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000,
       });
+      this.assignmentData = data.data;
+      console.log(data.data);
+    });
   }
 
   loadInitialData(): void {
-    this.profService
-      .getAllMatiere()
-      .subscribe((data) => (this.subjects = data.data));
-    this.profService
-      .getAllAutor()
-      .subscribe((data) => (this.auteurs = data.data));
+    this.profService.getAllMatiere().subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000,
+      });
+      this.subjects = data.data;
+    });
+    this.profService.getAllAutor().subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000,
+      });
+      this.auteurs = data.data;
+    });
   }
 
   updateAssignment(): void {
     this.assignmentService
       .modifyAssignemnt(this.assignmentData)
       .subscribe(() => {
+        this.snackBar.open(`Assignement modifier ✔️`, 'Fermer', {
+          duration: 3000,
+        });
         this.router.navigate(['/home']);
       });
   }

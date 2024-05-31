@@ -9,6 +9,7 @@ import { Assignment } from '../assignments/assignment.model';
 import { AssignmentsService } from '../shared/assignments.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteFormComponent } from '../assignments/note-form/note-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-assignement-drag-and-drop',
@@ -31,7 +32,8 @@ export class AssignementDragAndDropComponent {
 
   constructor(
     private assignmentService: AssignmentsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -40,10 +42,16 @@ export class AssignementDragAndDropComponent {
 
   loadAssignments(): void {
     this.assignmentService.getAssignmentsWithLimit(false).subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       this.nonRenduAssignments = data.data;
     });
 
     this.assignmentService.getAssignmentsWithLimit(true).subscribe((data) => {
+      this.snackBar.open(`${data.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       this.renduAssignments = data.data;
     });
   }
@@ -54,6 +62,9 @@ export class AssignementDragAndDropComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.snackBar.open(`Assignement noter avec success ✔️`, 'Fermer', {
+        duration: 3000
+      });
       this.loadAssignments();
       console.log("Appel de load Assignement");
     });

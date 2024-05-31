@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ProfService } from '../../prof/prof.service';
 import { Prof } from '../../prof/prof.model';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-assignment',
@@ -53,7 +54,8 @@ export class AddAssignmentComponent implements OnInit {
   constructor(
     private assignmentsService: AssignmentsService,
     private profService: ProfService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +74,9 @@ export class AddAssignmentComponent implements OnInit {
   loadProfessors() {
     this.profService.getProfessors().subscribe((response) => {
       console.log(response.data);
+      this.snackBar.open(`${response.message} ✔️`, 'Fermer', {
+        duration: 3000
+      });
       this.professors = response.data;
     });
   }
@@ -81,6 +86,9 @@ export class AddAssignmentComponent implements OnInit {
     this.profService
       .getProfessorSubjects(profId)
       .subscribe((response) => {
+        this.snackBar.open(`${response.message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
         this.subjects = response.data;
       });
   }
@@ -89,6 +97,9 @@ export class AddAssignmentComponent implements OnInit {
     this.profService
       .getSubjectClasses(subjectId)
       .subscribe((response) => {
+        this.snackBar.open(`${response.message} ✔️`, 'Fermer', {
+          duration: 3000
+        });
         console.log(response.data);
         this.classes = response.data;
       });
@@ -98,11 +109,17 @@ export class AddAssignmentComponent implements OnInit {
     console.log(this.assignmentData);
     this.assignmentsService.createAssignment(this.assignmentData).subscribe(
       (response) => {
+        this.snackBar.open(`Assignement creer ✔️`, 'Fermer', {
+          duration: 3000
+        });
         console.log('Assignment created successfully:', response);
         // Redirection ou autre logique de gestion après la création
         this.router.navigate(['/home']);
       },
       (error) => {
+        this.snackBar.open(`${error} ✔️`, 'Fermer', {
+          duration: 3000
+        });
         console.error('Error creating assignment:', error);
         // Gérer les erreurs
       }

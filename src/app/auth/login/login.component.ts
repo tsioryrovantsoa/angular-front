@@ -19,7 +19,9 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar) {}
 
   onSubmit() {
     this.authService.logIn(this.username, this.password).subscribe(success => {

@@ -54,8 +54,6 @@ Ajout / Editer et supression Assignments.
 
 ![image](https://github.com/tsioryrovantsoa/angular-front/assets/89444875/15ad44ac-4390-4468-9367-8b0e09518f9f)
 
-![image](https://github.com/tsioryrovantsoa/angular-front/assets/89444875/616fa248-e378-4300-930b-719d63da102a)
-
 
 # 4-Fonctionnalités optionnelles faites 
 

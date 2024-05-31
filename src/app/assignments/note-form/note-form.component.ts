@@ -47,7 +47,7 @@ export class NoteFormComponent {
     if (this.assignmentTransmis) {
       this.assignmentTransmis.rendu = true;
       this.assignmentTransmis.note = this.note;
-      this.assignmentTransmis.remarque = this.remarque;
+      this.assignmentTransmis.remarques = this.remarque;
       this.assignmentsService
         .noteAssignment(this.assignmentTransmis)
         .subscribe((message) => {
